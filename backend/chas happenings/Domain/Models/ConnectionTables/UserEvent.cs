@@ -21,9 +21,14 @@ namespace Domain.Models.ConectionTables
         public Event Event { get; set; }
 
         public string Interaction { get; set; }
-        
-        
-        // Interaction kan vara flera aker som:    CREATOR, ORGANIZER, LIKED, ATTENDING etcetc
-        // baserat på hur man väljer att strukturera interaktion eller roller så kan man använda Enums för att
-    }
+        //-------------------------------------------------------------------------------------------
+        // INTERACTIONS
+        //-------------------------------------------------------------------------------------------
+        // Interaction kan vara flera saker som:    CREATOR, ORGANIZER, LIKED, ATTENDING etcetc
+        // baserat på hur man väljer att strukturera det kan man använda Enums för att
+        // bestäma vilka värden för "interactions" som är tillåtna
+        // 
+        // Note: Att använda Enums för deta syfte är ganska nytt för mig (max) Så deta kan vara nåt bra att
+        //       ta upp tillsamans i gruppen så vi alla kan lära oss samtidigt
+    }//-------------------------------------------------------------------------------------------
 }
