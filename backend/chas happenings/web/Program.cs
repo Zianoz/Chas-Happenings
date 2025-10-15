@@ -1,5 +1,9 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.IRepositories;
+using Infrastructure.Repositories;
+using Application.Services;
+using Application.Services.IServices;
 
 namespace chas_happenings
 {
@@ -10,14 +14,20 @@ namespace chas_happenings
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ChasHappeningsDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
-            // Add services to the container.
+            builder.Services.AddScoped<IEventRepositories, EventRepositories>();
+            builder.Services.AddScoped<IEventServices, EventServices>();
+
+
+            
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
