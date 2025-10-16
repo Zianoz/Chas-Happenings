@@ -21,6 +21,9 @@ namespace Domain.Models.ConectionTables
         public Event Event { get; set; }
 
         public string Interaction { get; set; }
+
+
+
         //-------------------------------------------------------------------------------------------
         // INTERACTIONS
         //-------------------------------------------------------------------------------------------

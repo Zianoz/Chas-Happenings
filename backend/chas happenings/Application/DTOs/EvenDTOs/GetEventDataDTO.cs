@@ -1,15 +1,15 @@
-﻿using Domain.Models.ConectionTables;
+﻿using Domain.Models;
+using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace Domain.Models
+namespace Application.DTOs.EvenDTOs
 {
-    public class Event
+    internal class GetEventDataDTO
     {
         [Key]
         public int Id { get; set; }
@@ -19,7 +19,6 @@ namespace Domain.Models
         public string? Presentation { get; set; }
         public string? Text1 { get; set; }
         public string? Text2 { get; set; }
-        [Required]
         public DateTime EventCreated { get; set; } = DateTime.UtcNow;
         [Required]
         public DateTime EventDate { get; set; }

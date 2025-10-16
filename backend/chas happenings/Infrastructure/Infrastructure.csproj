@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Utilities %28Helpers%29\" />
+    <Folder Include="Utilities Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

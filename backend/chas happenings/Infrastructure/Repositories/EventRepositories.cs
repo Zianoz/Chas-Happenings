@@ -48,8 +48,8 @@ namespace Infrastructure.Repositories
         public async Task<int> AddEventRepoAsync(Event Event)
         {
             _context.Add(Event);
-            var results =  await _context.SaveChangesAsync();
-            return results;
+            await _context.SaveChangesAsync();
+            return Event.Id;
         }
 
         public async Task<int> UpdateEventRepoAsync(Event Event)

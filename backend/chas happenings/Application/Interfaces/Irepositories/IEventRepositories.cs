@@ -21,22 +21,14 @@ namespace Application.Interfaces.Irepositories
         Task<List<Event?>> GetEventsByCategoriesAndDateRepoAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate);
         Task<List<Event?>> GetEventsByTypeAndDateRepoAsync(HashSet<string> EventType, DateTime startdate, DateTime endDate);
 
-        // Operationer för Endpoints kring att hämta ALLA events baserat på en eller flera filter
-        // tror vi kan vänta med att implementera dessa då det bara är administratören som kommer
-        // använda dessa operationer     
+        // Admin Endpoints  
         Task<List<Event?>> GetAllEventsRepoAsync();
         Task<List<Event?>> GetEventsByCategoriesRepoAsync(HashSet<string> EventTags);
         Task<List<Event?>> GetEventsWithDataByDateTimeRepoAsync(DateTime startdate, DateTime endDate);
-        //------------------------------------------------------------------------------------------- 
 
 
-        // Hämta events som händer inom en viss tidsspan     (för kalendern, veckor månader etc).
-        // Hämta events basert på tags inom en viss tidspan  (för kalendern, veckor månader etc).
-        // hämta events Efter Type                           (för att hämta events baserade på settings)
         // hämta events via users egna settings
-        // hämta ett event för - ETT SPECIFIKT - datum
+        // hämta events för ett specifikt datum- ETT SPECIFIKT - datum
         // Deleta flera events samtidigt från en lista med event id's              (för administratörer)
-
-
     }
 }
