@@ -6,8 +6,10 @@ out/
 *.user
 *.suo
 *.userosscache
+**/.filenesting.json
 appsettings.Development.json
 appsettings.Local.json
+
 
 ### Frontend (React/Vite)
 node_modules/
@@ -23,3 +25,4 @@ Thumbs.db
 Desktop.ini
 .vscode/
 .idea/
+/backend/chas happenings/Infrastructure/Migrations

@@ -17,12 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
     <Folder Include="Services\" />
-    <Folder Include="Utilities %28Helpers%29\" />
+    <Folder Include="Utilities Helpers\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 

@@ -11,11 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Helpers %28Utilitys%29\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Services\" />
+    <Folder Include="Utilitys Helpers\" />
   </ItemGroup>
 
 </Project>
