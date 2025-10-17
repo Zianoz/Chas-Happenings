@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Application.DTOs.EvenDTOs;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Application.Interfaces.IServices
     {
         Task<Event?> GetEventByIdServicesAsync(int EventId);
         Task<int> DeleteEventsByIdServicesAsync(int EventId);
-        Task<int> AddEventServicesAsync(Event Event);
+        Task<int> AddEventServicesAsync(CreateEventDTO Event);
         Task<int> UpdateEventServicesAsync(Event Event);
 
         Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
