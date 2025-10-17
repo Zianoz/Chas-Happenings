@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Utilitys_Helpers;
 
 namespace Application.Services
 {
@@ -19,18 +20,14 @@ namespace Application.Services
             _repo = repo;
         }
 
-        public async Task<int> AddEventServicesAsync(CreateEventDTO EventDTO)
+        public async Task<Event> AddEventServicesAsync(CreateEventDTO EventDTO)
         {
             var Event = DTOEventMapper.CreateEventModelFromDTO(EventDTO);
 
-            var EventId = await _repo.AddEventRepoAsync(Event);
+            var EventResponse = await _repo.AddEventRepoAsync(Event);
+            var response = DbResponseHandler.DbObjectResponseCheck(EventResponse);
 
-            if(EventId > 0)
-            {
-                return EventId;
-            }
-
-            throw new InvalidOperationException($"Failed to add event to database, Event id was {EventId}");
+            return response;
         }
 
         public Task<int> DeleteEventsByIdServicesAsync(int EventId)
