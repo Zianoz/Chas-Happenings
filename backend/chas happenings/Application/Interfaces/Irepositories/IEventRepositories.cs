@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Enums;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Application.Interfaces.Irepositories
         // Operationer gör att hämta data inom en viss tidspan och med filter för tags och typ av event 
         Task<List<Event?>> GetEventsByDateTimeRepoAsync(DateTime startdate, DateTime endDate);
         Task<List<Event?>> GetEventsByCategoriesAndDateRepoAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByTypeAndDateRepoAsync(HashSet<string> EventType, DateTime startdate, DateTime endDate);
+        Task<List<Event?>> GetEventsByTypeAndDateRepoAsync(EventType EventType, DateTime startdate, DateTime endDate);
 
         // Admin Endpoints  
         Task<List<Event?>> GetAllEventsRepoAsync();
