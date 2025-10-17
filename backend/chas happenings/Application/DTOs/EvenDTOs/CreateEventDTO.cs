@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Enums;
+using Domain.Models;
 using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,8 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.EvenDTOs
 {
-    internal class CreateEventDTO
+    public class CreateEventDTO
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         public string? Description { get; set; }
@@ -24,12 +23,9 @@ namespace Application.DTOs.EvenDTOs
         public DateTime EventDate { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
-        public TimeSpan? Duration { get; set; }
         public string? Location { get; set; }
         [Required]
-        public string EventType { get; set; }
-        public ICollection<Tag> Tags { get; set; } = new List<Tag>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-        public ICollection<UserEvent> Interactions { get; set; } = new List<UserEvent>();
+        public EventType Type { get; set; }
+
     }
 }
