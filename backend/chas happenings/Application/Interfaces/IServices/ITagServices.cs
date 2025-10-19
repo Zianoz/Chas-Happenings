@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IServices
 {
-    internal interface ITagServices
+    public interface ITagServices
     {
         // Standard CRUD Operationer
         Task<Tag?> GetTagByIdServiceAsync(int TagId);
