@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    internal class TagServices : ITagServices
+    public class TagServices : ITagServices
     {
         private readonly ITagRepositories _repo;
         public TagServices(ITagRepositories repo)
