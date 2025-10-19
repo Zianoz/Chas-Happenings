@@ -14,7 +14,7 @@ namespace Application.Interfaces.IServices
         Task<Tag?> GetTagByIdServiceAsync(int TagId);
         Task<int> DeleteTagByIdServiceAsync(int TagId);
         Task<int> AddTagServiceAsync(CreateTagDTO tagDTO);
-        Task<int> UpdateTagServiceAsync(Tag tag);
+        Task<int> UpdateTagServiceAsync(int TagId, UpdateTagDTO updateTagDTO);
         // Admin Endpoints 
         Task<List<Tag?>> GetAllTagsServiceAsync();
     }
