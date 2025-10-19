@@ -50,8 +50,8 @@ namespace Infrastructure.Repositories
         public async Task<int> UpdateTagRepoAsync(Tag tag)
         {
             _context.Tags.Update(tag);
-            var results = await _context.SaveChangesAsync();
-            return results;
+            var result = await _context.SaveChangesAsync();
+            return result;
         }
     }
 }
