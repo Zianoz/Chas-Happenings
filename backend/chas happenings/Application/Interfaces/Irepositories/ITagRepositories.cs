@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Irepositories
 {
-    internal interface ITagRepositories
+    public interface ITagRepositories
     {
         // Standard CRUD Operationer
 
