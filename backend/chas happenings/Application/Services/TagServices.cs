@@ -20,30 +20,65 @@ namespace Application.Services
         }
 
 
-        public Task<int> AddTagServiceAsync(CreateTagDTO tagDTO)
+        public async Task<int> AddTagServiceAsync(CreateTagDTO tagDTO)
         {
-            var newTag = DTOTagMapper.CreateTagModelFromDTOs(tagDTO);
-
+            var tag = DTOTagMapper.CreateTagModelFromDTOs(tagDTO);
+            var newTag = await _repo.AddTagRepoAsync(tag);
+            if (newTag != null)
+            {
+                return newTag.Id;
+            }
+            throw new InvalidOperationException($"Failed to add tag to database, Tag id was {newTag.Id}");
         }
 
-        public Task<int> DeleteTagByIdServiceAsync(int TagId)
+        public async Task<int> DeleteTagByIdServiceAsync(int TagId)
         {
-            throw new NotImplementedException();
+            var tag = await _repo.GetTagByIdRepoAsync(TagId);
+            if (tag == null)
+            {
+                throw new KeyNotFoundException($"Tag with id {TagId} not found.");
+            }
+            var result = await _repo.DeleteTagByIdRepoAsync(TagId);
+            return result;
         }
 
-        public Task<List<Tag?>> GetAllTagsServiceAsync()
+        public async Task<List<Tag?>> GetAllTagsServiceAsync()
         {
-            throw new NotImplementedException();
+            var tags = await _repo.GetAllTagsRepoAsync();
+            var tagList = new List<Tag>();
+            foreach (var t in tags)
+            {
+                if (t != null)
+                {
+                    tagList.Add(new Tag
+                    {
+                        Id = t.Id,
+                        TagName = t.TagName
+                    });
+                }
+            }
+            return tagList;
         }
 
-        public Task<Tag?> GetTagByIdServiceAsync(int TagId)
+        public async Task<Tag?> GetTagByIdServiceAsync(int TagId)
         {
-            throw new NotImplementedException();
+            var tag = await _repo.GetTagByIdRepoAsync(TagId);
+            if (tag == null)
+            {
+                throw new KeyNotFoundException($"Tag with id {TagId} not found.");
+            }
+            return tag;
         }
 
-        public Task<int> UpdateTagServiceAsync(Tag tag)
+        public async Task<int> UpdateTagServiceAsync(Tag tag)
         {
-            throw new NotImplementedException();
+            var existingTag = await _repo.GetTagByIdRepoAsync(tag.Id);
+            if (existingTag == null)
+            {
+                throw new KeyNotFoundException($"Tag with id {tag.Id} not found.");
+            }
+            var result = await _repo.UpdateTagRepoAsync(tag);
+            return result;
         }
     }
 }
