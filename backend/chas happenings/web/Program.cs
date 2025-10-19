@@ -1,9 +1,9 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Repositories.IRepositories;
+//using Infrastructure.Repositories.IRepositories;
 using Infrastructure.Repositories;
 using Application.Services;
-using Application.Services.IServices;
+//using Application.Services.IServices;
 
 namespace chas_happenings
 {
@@ -18,8 +18,8 @@ namespace chas_happenings
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped<IEventRepositories, EventRepositories>();
-            builder.Services.AddScoped<IEventServices, EventServices>();
+            //builder.Services.AddScoped<IEventRepositories, EventRepositories>();
+            //builder.Services.AddScoped<IEventServices, EventServices>();
 
 
             
