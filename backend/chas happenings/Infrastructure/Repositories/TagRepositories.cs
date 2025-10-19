@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    internal class TagRepositories : ITagRepositories
+    public class TagRepositories : ITagRepositories
     {
         private readonly ChasHappeningsDbContext _context;
 
