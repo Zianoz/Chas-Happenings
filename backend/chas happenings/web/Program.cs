@@ -26,11 +26,19 @@ namespace chas_happenings
             builder.Services.AddScoped<ITagRepositories, TagRepositories>();
             builder.Services.AddScoped<ITagServices, TagServices>();
 
-
+            //Add swagger for API testing
             builder.Services.AddControllersWithViews();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Chas Happenings API",
+                    Version = "v1"
+                });
+            });
 
             var app = builder.Build();
-
 
             if (!app.Environment.IsDevelopment())
             {
