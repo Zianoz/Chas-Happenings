@@ -70,14 +70,16 @@ namespace Application.Services
             return tag;
         }
 
-        public async Task<int> UpdateTagServiceAsync(Tag tag)
+        public async Task<int> UpdateTagServiceAsync(int TagId, UpdateTagDTO updateTagDTO)
         {
-            var existingTag = await _repo.GetTagByIdRepoAsync(tag.Id);
+            var existingTag = await _repo.GetTagByIdRepoAsync(TagId);
             if (existingTag == null)
             {
-                throw new KeyNotFoundException($"Tag with id {tag.Id} not found.");
+                throw new KeyNotFoundException($"Tag with id {TagId} not found.");
             }
-            var result = await _repo.UpdateTagRepoAsync(tag);
+            // Map UpdateTagDTO to Tag
+            existingTag.TagName = updateTagDTO.TagName;
+            var result = await _repo.UpdateTagRepoAsync(existingTag);
             return result;
         }
     }
