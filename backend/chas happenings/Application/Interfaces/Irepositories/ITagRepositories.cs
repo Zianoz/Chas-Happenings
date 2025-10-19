@@ -13,7 +13,7 @@ namespace Application.Interfaces.Irepositories
 
         Task<Tag?> GetTagByIdRepoAsync(int TagId);
         Task<int> DeleteTagByIdRepoAsync(int TagId);
-        Task<int> AddTagRepoAsync(Tag tag);
+        Task<Tag> AddTagRepoAsync(Tag tag);
         Task<int> UpdateTagRepoAsync(Tag tag);
 
         // Admin Endpoints 
