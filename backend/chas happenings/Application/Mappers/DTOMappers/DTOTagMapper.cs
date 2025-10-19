@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mappers.DTOMappers
 {
-    internal class DTOTagMapper
+    public class DTOTagMapper
     {
         public static Tag CreateTagModelFromDTOs(CreateTagDTO tagDTO)
         {
@@ -18,13 +18,10 @@ namespace Application.Mappers.DTOMappers
             };
         }
 
-        //public static Tag UpdateTagModelFromDTOs(UpdateTagDTO tagDTO, int tagId)
+        //public static void UpdateTagModelFromDTOs(Tag existingTag, UpdateTagDTO tagDTO)
         //{
-        //    return new Tag
-        //    {
-        //        Id = tagId,
-        //        TagName = tagDTO.TagName,
-        //    };
+        //    existingTag.TagName = tagDTO.TagName;
+        //    return 
         //}
 
     }
