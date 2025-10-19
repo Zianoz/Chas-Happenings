@@ -58,9 +58,9 @@ namespace chas_happenings.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<ActionResult> UpdateTag(Tag tag)
+        public async Task<ActionResult> UpdateTag(int TagId, UpdateTagDTO updateTagDTO)
         {
-            var result = await _tagServices.UpdateTagServiceAsync(tag);
+            var result = await _tagServices.UpdateTagServiceAsync(TagId, updateTagDTO);
             if (result == 0)
             {
                 return BadRequest("Operation failed, could not update tag");
