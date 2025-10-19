@@ -18,14 +18,14 @@ namespace Application.Mappers.DTOMappers
             };
         }
 
-        public static Tag UpdateTagModelFromDTOs(UpdateTagDTO tagDTO, int tagId)
-        {
-            return new Tag
-            {
-                Id = tagId,
-                TagName = tagDTO.TagName,
-            };
-        }
+        //public static Tag UpdateTagModelFromDTOs(UpdateTagDTO tagDTO, int tagId)
+        //{
+        //    return new Tag
+        //    {
+        //        Id = tagId,
+        //        TagName = tagDTO.TagName,
+        //    };
+        //}
 
     }
 }
