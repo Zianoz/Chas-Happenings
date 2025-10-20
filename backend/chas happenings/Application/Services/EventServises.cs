@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    internal class EventServises : IEventServices
+    public class EventServises : IEventServices
     {
         private readonly IEventRepositories _repo;
         public EventServises(IEventRepositories repo)
