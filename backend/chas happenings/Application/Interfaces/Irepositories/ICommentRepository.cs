@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.DTOs.CommentDTO;
+using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace Application.Interfaces.Irepositories
 {
     public interface ICommentRepository
     {
+        Task<int> AddCommentAsync(Comment comment);
     }
 }

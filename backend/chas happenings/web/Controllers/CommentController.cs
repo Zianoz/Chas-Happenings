@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.IServices;
+using Application.DTOs.CommentDTO;
 
 namespace chas_happenings.Controllers
 {
@@ -16,9 +17,9 @@ namespace chas_happenings.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddComment(string commentText)
+        public async Task<ActionResult<int>> AddComment(CreateCommentDTO commentDTO)
         {
-
+            var result = await _commentService.AddCommentAsync(commentDTO);
 
             return Ok("Comment added successfully");
         }
