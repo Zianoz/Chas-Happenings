@@ -21,7 +21,7 @@ namespace chas_happenings.Controllers
         {
             var result = await _commentService.AddCommentAsync(commentDTO);
 
-            return Ok("Comment added successfully");
+            return Created(string.Empty, result);
         }
     }
 }
