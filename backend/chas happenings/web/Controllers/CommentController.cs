@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.IServices;
 using Application.DTOs.CommentDTO;
+using Domain.Models;
+using Application.DTOs.CommentDTOs;
 
 namespace chas_happenings.Controllers
 {
@@ -23,5 +25,18 @@ namespace chas_happenings.Controllers
 
             return Created(string.Empty, result);
         }
+
+        [HttpGet("{eventId}")]
+        public async Task<ActionResult<IEnumerable<GetCommentsByEventIdDTO>>> GetCommentsByEventId(int eventId)
+        {
+            var comments = await _commentService.GetCommentsByEventId(eventId);
+
+            if (comments == null || !comments.Any())
+                return NotFound($"No comments found for event with ID {eventId}.");
+
+            return Ok(comments);
+        }
+
+
     }
 }

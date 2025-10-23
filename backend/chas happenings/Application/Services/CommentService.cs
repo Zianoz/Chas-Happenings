@@ -1,7 +1,9 @@
 ﻿using Application.DTOs.CommentDTO;
+using Application.DTOs.CommentDTOs;
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
-using Application.Mappers.CommentMappers;
+using Application.Mappers.DTOMappers;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,7 @@ namespace Application.Services
 
         public async Task<int> AddCommentAsync(CreateCommentDTO commentDTO)
         {
-            var comment = CommentMapper.CreateCommentMapper(commentDTO);
+            var comment = DTOCommentMapper.CreateCommentMapper(commentDTO);
             var response = await _commentRepository.AddCommentAsync(comment);
             if (response > 0)
             {
@@ -30,6 +32,14 @@ namespace Application.Services
             {
                 throw new InvalidOperationException("Failed to add comment to the database.");
             }
+        }
+
+        public async Task<IEnumerable<GetCommentsByEventIdDTO>> GetCommentsByEventId(int eventId)
+        {
+            var eventComments = await _commentRepository.GetCommentsByEventIdAsync(eventId);
+            var eventCommentsDTO = DTOCommentMapper.GetCommentsMapper(eventComments);
+            return eventCommentsDTO;
+
         }
     }
 }

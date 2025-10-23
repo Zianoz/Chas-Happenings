@@ -1,4 +1,6 @@
 ﻿using Application.DTOs.CommentDTO;
+using Application.DTOs.CommentDTOs;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +12,6 @@ namespace Application.Interfaces.IServices
     public interface ICommentService
     {
         Task<int> AddCommentAsync(CreateCommentDTO commentDTO);
+        Task<IEnumerable<GetCommentsByEventIdDTO>> GetCommentsByEventId(int eventId);
     }
 }

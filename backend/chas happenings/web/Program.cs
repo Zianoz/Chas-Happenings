@@ -37,6 +37,9 @@ namespace chas_happenings
             builder.Services.AddScoped<ITagRepositories, TagRepositories>();
             builder.Services.AddScoped<ITagServices, TagServices>();
 
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+
             //Add swagger for API testing
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();

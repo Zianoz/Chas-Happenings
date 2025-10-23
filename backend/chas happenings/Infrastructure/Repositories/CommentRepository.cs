@@ -3,9 +3,12 @@ using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Domain.Models;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +28,15 @@ namespace Infrastructure.Repositories
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             return comment.Id;
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsByEventIdAsync(int eventId)
+        {
+            var eventComments = _context.Comments
+                .Where(c => c.EventId == eventId)
+                .Include(c => c.Author)
+                .ToListAsync();
+            return await eventComments;
         }
     }
 }
