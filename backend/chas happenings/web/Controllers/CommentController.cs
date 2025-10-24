@@ -37,6 +37,12 @@ namespace chas_happenings.Controllers
             return Ok(comments);
         }
 
+        [HttpPut("{commentId}")]
+        public async Task<ActionResult<PutCommentDTO>> EditCommentById(int commentId)
+        {
+            var comment = await _commentService.EditCommentById(commentId);
+            return Ok(comment);
+        }
 
     }
 }

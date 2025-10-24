@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CommentDTO;
+using Application.DTOs.CommentDTOs;
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Domain.Models;
@@ -37,6 +38,21 @@ namespace Infrastructure.Repositories
                 .Include(c => c.Author)
                 .ToListAsync();
             return await eventComments;
+        }
+        public async Task<Comment> GetCommentByIdAsync(int commentId)
+        {
+            var comment = await _context.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+            return comment;
+        }
+        public async Task<int> SaveCommentChangesByIdAsync(PutCommentDTO editedComment)
+        {
+            var comment = await _context.Comments
+                .FirstOrDefaultAsync(c => c.Id == editedComment.Id);
+
+            comment.Text = editedComment.Text;
+            
+            return await _context.SaveChangesAsync();
         }
     }
 }

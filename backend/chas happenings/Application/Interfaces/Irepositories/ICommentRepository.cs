@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CommentDTO;
+using Application.DTOs.CommentDTOs;
 using Domain.Models;
 using System;
 using System.Collections;
@@ -13,5 +14,7 @@ namespace Application.Interfaces.Irepositories
     {
         Task<int> AddCommentAsync(Comment comment);
         Task<IEnumerable<Comment>> GetCommentsByEventIdAsync(int eventId);
+        Task<Comment> GetCommentByIdAsync(int commentId); 
+        Task<int> SaveCommentChangesByIdAsync(PutCommentDTO editedComment);
     }
 }

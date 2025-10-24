@@ -38,5 +38,14 @@ namespace Application.Mappers.DTOMappers
                 CreatedAt = eventComment.CreatedAt
             });
         }
+
+        public static PutCommentDTO PutCommentMapper(Comment comment)
+        {
+            return new PutCommentDTO
+            {
+                Id = comment.Id,
+                Text = comment.Text
+            };
+        }
     }
 }
