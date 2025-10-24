@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mappers.DTOMappers
 {
-    internal class GenericDTOmapper
+    internal static class GenericDTOmapper
     {
         public static void Mapper<Tmodel, Tdto>(Tmodel model, Tdto dto) where Tmodel : class where Tdto : class
         {

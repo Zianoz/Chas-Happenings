@@ -27,7 +27,6 @@ namespace Domain.Models
         public TimeSpan? EndTime { get; set; }
         public string? Location { get; set; }
         [Required]
-        //Type är en Enum
         public EventType Type { get; set; }
         public ICollection<Tag> Tags { get; set; } = new List<Tag>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();

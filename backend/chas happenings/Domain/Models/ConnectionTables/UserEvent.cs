@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Domain.Models.ConectionTables
         public int EventId { get; set; }
         public Event Event { get; set; }
 
-        public string Interaction { get; set; }
+        public Interactions Interaction { get; set; }
 
 
 

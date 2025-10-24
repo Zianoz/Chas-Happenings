@@ -1,7 +1,8 @@
 ﻿using Application.DTOs.EvenDTOs;
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
-using Application.Mappers.DTOMappers;
+using static Application.Mappers.DTOMappers.DTOEventMapper;
+using static Application.Mappers.DTOMappers.GenericDTOmapper;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -21,26 +22,37 @@ namespace Application.Services
 
         public async Task<int> AddEventServicesAsync(CreateEventDTO EventDTO)
         {
-            var Event = DTOEventMapper.CreateEventModelFromDTO(EventDTO);
+            var Event = CreateEventFromDTO(EventDTO);
 
-            var EventId = await _repo.AddEventRepoAsync(Event);
 
-            if(EventId > 0)
+            var results = await _repo.AddEventRepoAsync(Event);
+
+            if(results > 0)
             {
-                return EventId;
+                return results;
             }
 
-            throw new InvalidOperationException($"Failed to add event to database, Event id was {EventId}");
+            throw new InvalidOperationException($"Failed to add event to database");
         }
 
-        public Task<int> DeleteEventsByIdServicesAsync(int EventId)
+        public async Task<bool> DeleteEventsByIdServicesAsync(int eventId)
         {
-            throw new NotImplementedException();
+            var results = await _repo.DeleteEventsByIdRepoAsync(eventId);
+
+            if(results>0)
+            {
+                return true;
+            }
+            return false;
+
         }
 
-        public Task<Event?> GetEventByIdServicesAsync(int EventId)
+        public async Task<GetEventCalenderDisplayDataDTO> GetEventByIdDisplayDataServicesAsync(int eventId)
         {
-            throw new NotImplementedException();
+            var Event = await _repo.GetEventByIdRepoAsync(eventId);
+
+
+
         }
 
         public Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate)
@@ -58,9 +70,19 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<int> UpdateEventServicesAsync(Event Event)
+        public async Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto)
         {
-            throw new NotImplementedException();
+            var Event = await _repo.GetEventByIdRepoAsync(eventDto.Id);
+
+            Mapper(Event, eventDto);
+
+            var results = await _repo.UpdateEventRepoAsync(Event);
+
+            if(results>1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

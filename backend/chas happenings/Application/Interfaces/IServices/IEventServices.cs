@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.EvenDTOs;
 using Domain.Models;
+using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace Application.Interfaces.IServices
 {
     public interface IEventServices
     {
-        Task<Event?> GetEventByIdServicesAsync(int EventId);
-        Task<int> DeleteEventsByIdServicesAsync(int EventId);
-        Task<int> AddEventServicesAsync(CreateEventDTO Event);
-        Task<int> UpdateEventServicesAsync(Event Event);
+        Task<Event?> GetEventByIdDisplayDataServicesAsync(int eventId);
+        Task<GetEventWithExtraDataDTO?> GetEventByIdWithExtraDataServicesAsync(int eventId);
+        Task<bool> DeleteEventsByIdServicesAsync(int EventId); // DONE
+        Task<int> AddEventServicesAsync(CreateEventDTO Event); // DONE - Neads logick for adding a Createror (user)
+        Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto); // DONE - revisit (update tags too?)
 
         Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
         Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate);
