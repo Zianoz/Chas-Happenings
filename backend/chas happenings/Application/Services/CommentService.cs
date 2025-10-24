@@ -60,5 +60,19 @@ namespace Application.Services
 
             return editedComment;
         }
+
+        public async Task<int> DeleteCommentByIdAsync(int commentId)
+        {
+            var comment = await _commentRepository.DeleteCommentByIdAsync(commentId);
+            if (comment > 0)
+            {
+                return comment;
+            }
+            else
+            {
+                throw new Exception("Failed to delete the comment from the database.");
+            }
+
+        }
     }
 }

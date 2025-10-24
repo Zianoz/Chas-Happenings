@@ -54,5 +54,17 @@ namespace Infrastructure.Repositories
             
             return await _context.SaveChangesAsync();
         }
+        public async Task<int> DeleteCommentByIdAsync(int commentId)
+        {
+            var comment = await _context.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+
+            if (comment == null)
+            {
+                throw new Exception($"Comment with ID {commentId} not found.");
+            }
+            _context.Comments.Remove(comment);
+            return await _context.SaveChangesAsync();
+        }
     }
 }

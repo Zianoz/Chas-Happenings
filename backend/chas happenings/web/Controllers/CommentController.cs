@@ -44,5 +44,19 @@ namespace chas_happenings.Controllers
             return Ok(comment);
         }
 
+        [HttpDelete("{commentId}")]
+        public async Task<ActionResult<int>> DeleteCommentByIdAsync(int commentId)
+        {
+            var result = await _commentService.DeleteCommentByIdAsync(commentId);
+            if (result == null)
+            {
+                throw new Exception("Comment not found");
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
     }
 }

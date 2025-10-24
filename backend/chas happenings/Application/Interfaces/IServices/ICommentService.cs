@@ -14,5 +14,6 @@ namespace Application.Interfaces.IServices
         Task<int> AddCommentAsync(CreateCommentDTO commentDTO);
         Task<IEnumerable<GetCommentsByEventIdDTO>> GetCommentsByEventId(int eventId);
         Task<PutCommentDTO> EditCommentById(int commentId);
+        Task<int> DeleteCommentByIdAsync(int commentId);
     }
 }
