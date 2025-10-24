@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models.ConectionTables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,7 @@ namespace Domain.Models
         public string ProfilePictureUrl { get; set; }
         public string UserDescription { get; set; }
 
-        public ICollection<Event> CreatedEvents { get; set; } = new List<Event>();
-        //public ICollection<UserEventInterested> Interested { get; set; } = new List<UserEventInterested>();
-        //public ICollection<UserEventAttending> Attending { get; set; } = new List<UserEventAttending>();
+        public ICollection<UserEvent> EventsInteraction { get; set; } = new List<UserEvent>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
