@@ -39,12 +39,12 @@ namespace Application.Mappers.DTOMappers
             });
         }
 
-        public static PutCommentDTO PutCommentMapper(Comment comment)
+        public static Comment PutCommentMapper(PutCommentDTO dto)
         {
-            return new PutCommentDTO
+            return new Comment
             {
-                Id = comment.Id,
-                Text = comment.Text
+                Id = dto.Id,
+                Text = dto.Text
             };
         }
     }

@@ -42,7 +42,7 @@ namespace Application.Services
 
         }
 
-        public async Task<PutCommentDTO> EditCommentById(int commentId)
+        public async Task<int> EditCommentById(int commentId, PutCommentDTO dto)
         {
             var comment = await _commentRepository.GetCommentByIdAsync(commentId);
             if (comment == null)
@@ -50,15 +50,15 @@ namespace Application.Services
                 throw new Exception($"Comment with ID {commentId} not found.");
             }
             
-            var editedComment = DTOCommentMapper.PutCommentMapper(comment);
+            comment.Text = dto.Text;
 
-            var result = await _commentRepository.SaveCommentChangesByIdAsync(editedComment);
+            var result = await _commentRepository.SaveCommentChangesByIdAsync(comment);
             if (result <= 0)
             {
                 throw new InvalidOperationException("Failed to save changes to the comment.");
             }
 
-            return editedComment;
+            return result;
         }
 
         public async Task<int> DeleteCommentByIdAsync(int commentId)

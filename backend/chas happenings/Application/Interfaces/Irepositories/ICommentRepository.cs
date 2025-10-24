@@ -15,7 +15,7 @@ namespace Application.Interfaces.Irepositories
         Task<int> AddCommentAsync(Comment comment);
         Task<IEnumerable<Comment>> GetCommentsByEventIdAsync(int eventId);
         Task<Comment> GetCommentByIdAsync(int commentId); 
-        Task<int> SaveCommentChangesByIdAsync(PutCommentDTO editedComment);
+        Task<int> SaveCommentChangesByIdAsync(Comment comment);
         Task<int> DeleteCommentByIdAsync(int commentId);
     }
 }

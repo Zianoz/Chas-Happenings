@@ -45,26 +45,18 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(c => c.Id == commentId);
             return comment;
         }
-        public async Task<int> SaveCommentChangesByIdAsync(PutCommentDTO editedComment)
+        public async Task<int> SaveCommentChangesByIdAsync(Comment comment)
         {
-            var comment = await _context.Comments
-                .FirstOrDefaultAsync(c => c.Id == editedComment.Id);
-
-            comment.Text = editedComment.Text;
-            
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return comment.Id;
         }
         public async Task<int> DeleteCommentByIdAsync(int commentId)
         {
-            var comment = await _context.Comments
-                .FirstOrDefaultAsync(c => c.Id == commentId);
+            var result = await _context.Comments
+                .Where(c => c.Id == commentId)
+                .ExecuteDeleteAsync();
 
-            if (comment == null)
-            {
-                throw new Exception($"Comment with ID {commentId} not found.");
-            }
-            _context.Comments.Remove(comment);
-            return await _context.SaveChangesAsync();
+            return result;
         }
     }
 }

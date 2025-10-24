@@ -38,10 +38,10 @@ namespace chas_happenings.Controllers
         }
 
         [HttpPut("{commentId}")]
-        public async Task<ActionResult<PutCommentDTO>> EditCommentById(int commentId)
+        public async Task<ActionResult<int>> EditCommentById(int commentId, PutCommentDTO dto)
         {
-            var comment = await _commentService.EditCommentById(commentId);
-            return Ok(comment);
+            var result = await _commentService.EditCommentById(commentId, dto);
+            return Ok(result);
         }
 
         [HttpDelete("{commentId}")]
