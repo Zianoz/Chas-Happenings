@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.EvenDTOs;
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
+using Application.Mappers.DTOMappers;
 using static Application.Mappers.DTOMappers.DTOEventMapper;
 using static Application.Mappers.DTOMappers.GenericDTOmapper;
 using Domain.Models;
@@ -9,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Utilitys_Helpers;
+using Domain.Models.ConectionTables;
+using Domain.Enums;
 
 namespace Application.Services
 {
@@ -20,54 +24,81 @@ namespace Application.Services
             _repo = repo;
         }
 
-        public async Task<int> AddEventServicesAsync(CreateEventDTO EventDTO)
+        public async Task<bool> AddEventServicesAsync(CreateEventDTO EventDTO, int userId)
         {
-            var Event = CreateEventFromDTO(EventDTO);
+            var createdEvent = CreateEventFromDTO(EventDTO);
 
-
-            var results = await _repo.AddEventRepoAsync(Event);
-
-            if(results > 0)
+            createdEvent.Interactions.Add(new UserEvent
             {
-                return results;
-            }
+                UserId = userId,
+                Interaction = Interactions.cretator
+            });
 
-            throw new InvalidOperationException($"Failed to add event to database");
+            var results = await _repo.AddEventRepoAsync(createdEvent);
+            return VerifierUtility.VerifyResponse(results);
+
         }
 
         public async Task<bool> DeleteEventsByIdServicesAsync(int eventId)
         {
             var results = await _repo.DeleteEventsByIdRepoAsync(eventId);
-
-            if(results>0)
-            {
-                return true;
-            }
-            return false;
+            return VerifierUtility.VerifyResponse(results);
 
         }
 
-        public async Task<GetEventCalenderDisplayDataDTO> GetEventByIdDisplayDataServicesAsync(int eventId)
+        public async Task<GetEventCalenderDisplayDTO> GetEventByIdDisplayDataServicesAsync(int eventId)
         {
             var Event = await _repo.GetEventByIdRepoAsync(eventId);
-
-
-
+            var verifiedEvent = VerifierUtility.VerifyObject(Event);
+            return DTOEventMapper.MappEventCalenderDisplayData(verifiedEvent);
         }
 
-        public Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate)
+        public async Task<GetEventWithExtraDataDTO> GetEventByIdWithExtraDataServicesAsync(int eventId)
         {
-            throw new NotImplementedException();
+            var Event = await _repo.GetEventByIdRepoAsync(eventId);
+            var verifiedEvent = VerifierUtility.VerifyObject(Event);
+            return DTOEventMapper.MappEventWithExtraDataDTO(verifiedEvent);
         }
 
-        public Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate)
+        public async Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> eventTags, DateTime startdate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var eventList = await _repo.GetEventsByCategoriesAndDateRepoAsync(eventTags, startdate, endDate);
+            foreach(var listedEvent in eventList)
+            {
+                DTOEventMapper.MappEventCalenderDisplayData(listedEvent);
+            }
+            return eventList;
         }
 
-        public Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> EventType, DateTime startdate, DateTime endDate)
+        public async Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var eventList = await _repo.GetEventsByDateTimeRepoAsync(startdate,endDate);
+            foreach(var listedEvent in eventList)
+            {
+                DTOEventMapper.MappEventCalenderDisplayData(listedEvent);
+            }
+            return eventList;
+        }
+
+        public async Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> eventTypes, DateTime startdate, DateTime endDate)
+        {
+            var enumTypes = new HashSet<EventType>();
+
+            foreach (var eventType in eventTypes)
+            {
+                if(Enum.TryParse<EventType>(eventType, out var enumType))
+                {
+                    enumTypes.Add(enumType);
+                }
+            }
+
+            var eventlist = await _repo.GetEventsByTypeAndDateRepoAsync(enumTypes, startdate,endDate);
+            
+            foreach(var listedEvent in eventlist)
+            {
+                DTOEventMapper.MappEventCalenderDisplayData(listedEvent);
+            }
+            return eventlist;
         }
 
         public async Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto)
