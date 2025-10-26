@@ -76,9 +76,9 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Event?>> GetEventsByTypeAndDateRepoAsync(EventType EventType, DateTime startdate, DateTime endDate)
+        public async Task<List<Event?>> GetEventsByTypeAndDateRepoAsync(HashSet<EventType> EventType, DateTime startdate, DateTime endDate)
         {
-            var events = await _context.Events.Where(e => e.Type==EventType && e.EventDate >= startdate && e.EventDate <= endDate).ToListAsync();
+            var events = await _context.Events.Where(e => EventType.Contains(e.Type) && e.EventDate >= startdate && e.EventDate <= endDate).ToListAsync();
             return events;
         }
     }
