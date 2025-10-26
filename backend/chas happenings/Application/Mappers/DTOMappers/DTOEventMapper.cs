@@ -71,9 +71,9 @@ namespace Application.Mappers.DTOMappers
 
             };
         }
-        public static GetEventCalenderDisplayDataDTO MappEventCalenderDisplayData(Event Event)
+        public static GetEventCalenderDisplayDTO MappEventCalenderDisplayData(Event Event)
         {
-            return new GetEventCalenderDisplayDataDTO
+            return new GetEventCalenderDisplayDTO
             {
                 Id = Event.Id,
                 Title = Event.Title,
@@ -81,21 +81,6 @@ namespace Application.Mappers.DTOMappers
                 StartTime = Event.StartTime,
                 EndTime = Event.EndTime,
                 Type = Event.Type,
-                Interactions = Event.Interactions.Select(t => new UserEventInteractionDTO
-                {
-
-                    Interaction = t.Interaction,
-                    //kåden under var delvis genererad med AI, framför allt tenerary statmentet eftersom jag inte vet hur man gör
-                    // conditional if statments efter en geter men tydligen fungerar tenerary statment.....who knew
-
-                    User = t.Interaction == Interactions.cretator ? new GetUserNamePictureDTO
-                    {
-                        Id = t.User.Id,
-                        Username = t.User.Username,
-                        ProfilePictureUrl = t.User.ProfilePictureUrl
-                    }: null
-
-                }).ToList(),
             };
         }   
     }
