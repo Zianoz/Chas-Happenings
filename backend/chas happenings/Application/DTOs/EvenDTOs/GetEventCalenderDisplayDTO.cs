@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.EvenDTOs
 {
-    internal class GetEventCalenderDisplayDataDTO
+    public class GetEventCalenderDisplayDTO
     {
         [Key]
         public int Id { get; set; }
@@ -23,6 +23,5 @@ namespace Application.DTOs.EvenDTOs
         public TimeSpan? EndTime { get; set; }
         [Required]
         public EventType Type { get; set; }
-        public ICollection<UserEventInteractionDTO> Interactions { get; set; } = new List<UserEventInteractionDTO>();
     }
 }
