@@ -11,15 +11,15 @@ namespace Application.Interfaces.IServices
 {
     public interface IEventServices
     {
-        Task<Event?> GetEventByIdDisplayDataServicesAsync(int eventId);
-        Task<GetEventWithExtraDataDTO?> GetEventByIdWithExtraDataServicesAsync(int eventId);
+        Task<GetEventCalenderDisplayDTO> GetEventByIdDisplayDataServicesAsync(int eventId);
+        Task<GetEventWithExtraDataDTO> GetEventByIdWithExtraDataServicesAsync(int eventId);
         Task<bool> DeleteEventsByIdServicesAsync(int EventId); // DONE
-        Task<int> AddEventServicesAsync(CreateEventDTO Event); // DONE - Neads logick for adding a Createror (user)
+        Task<bool> AddEventServicesAsync(CreateEventDTO Event, int userId); // DONE
         Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto); // DONE - revisit (update tags too?)
 
         Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> EventType, DateTime startdate, DateTime endDate);
+        Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> eventTags, DateTime startdate, DateTime endDate);
+        Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> eventType, DateTime startdate, DateTime endDate);
 
     }
 }
