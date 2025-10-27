@@ -12,7 +12,7 @@ namespace Application.Interfaces.IServices
     public interface IUserService
     {
         //stand CRUD Operations
-        Task<User?> GetUserByIdServicesAsync(int userId); //Jing
+        Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId); //Jing
         Task<bool> DeleteUserByIdServicesAsync(int userId);//Jing
         Task<int> AddUserServicesAsync(CreateUserDTO userDTO);//Zian
         Task<bool> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO);//Zian
@@ -22,7 +22,7 @@ namespace Application.Interfaces.IServices
         Task<GetUserCommentsDTO?> GetUserCommentsAsync(int userId);
 
         // for admin
-        Task<List<User?>> GetAllUsers();//Jing
+        Task<List<GetUserByIdDTO?>> GetAllUsers();//Jing
         Task<List<User?>> GetListOfUsers(List<int>userIds);//Zian
     }
 }
