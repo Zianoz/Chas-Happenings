@@ -34,9 +34,11 @@ namespace Infrastructure.Repositories
             }   
             return false;
         }
-        public Task<User> AddUserRepoAsync(User user)
+        public async Task<int> AddUserRepoAsync(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user.Id;
         }
         public Task<int> UpdateUserRepoAsync(User user)
         {

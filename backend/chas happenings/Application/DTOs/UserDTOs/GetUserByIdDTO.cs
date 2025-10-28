@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Enums;
+using Domain.Models;
 using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Application.DTOs.UserDTOs
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Course { get; set; }
-        public string Role { get; set; }
+        public UserRoles Role { get; set; }
         public string ProfilePictureUrl { get; set; }
         public string UserDescription { get; set; }
     }

@@ -9,15 +9,18 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services
 {
     public class UserServices : IUserService
     {
         private readonly IUserRepositories _userRepo;
-        public UserServices(IUserRepositories userRepo)
+        private readonly IPasswordHasher<User> _passwordHasher;
+        public UserServices(IUserRepositories userRepo, IPasswordHasher<User> passwordHasher)
         {
             _userRepo = userRepo;
+            _passwordHasher = passwordHasher;
         }
 
         //stand CRUD Operations
@@ -46,7 +49,13 @@ namespace Application.Services
         }
         public Task<int> AddUserServicesAsync(CreateUserDTO userDTO)
         {
-            throw new NotImplementedException();
+            var user = DTOUserMapper.CreateUserByDTOMapper(userDTO);
+
+            //ASP.NET Identity built in password hasher, send in user and plain password, get back hashed password
+            user.PasswordHash = _passwordHasher.HashPassword(user, userDTO.Password);
+
+            var userId = _userRepo.AddUserRepoAsync(user);
+            return userId;
         }
         public Task<bool> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO)
         {

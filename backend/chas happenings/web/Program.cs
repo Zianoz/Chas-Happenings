@@ -1,17 +1,20 @@
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-//using Infrastructure.Repositories.IRepositories;
-using Infrastructure.Repositories;
-using Application.Services;
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
+using Application.Services;
+using Domain.Models;
+using Infrastructure.Data;
+//using Infrastructure.Repositories.IRepositories;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI; // Add this if needed
-using Swashbuckle.AspNetCore.Swagger;  // Add this if needed
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;  // Add this if needed
+using Swashbuckle.AspNetCore.SwaggerUI; // Add this if needed
+using Microsoft.AspNetCore.Identity;
 
 
 //using Application.Services.IServices;
@@ -39,6 +42,14 @@ namespace chas_happenings
 
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<ICommentService, CommentService>();
+
+            builder.Services.AddScoped<IUserRepositories, UserRepositories>();
+            builder.Services.AddScoped<IUserService, UserServices>();
+
+            //Register password hasher service
+            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+
 
             //Add swagger for API testing
             builder.Services.AddControllersWithViews();

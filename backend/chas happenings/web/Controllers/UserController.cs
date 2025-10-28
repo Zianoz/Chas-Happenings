@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.DTOs.UserDTOs;
+using Application.Interfaces.IServices;
 using Application.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,16 @@ namespace chas_happenings.Controllers
             _userService = userService;
         }
 
-
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateUserAsync(CreateUserDTO userDTO)
+        {
+            var userId = await _userService.AddUserServicesAsync(userDTO);
+            if (userId == 0 || userId == null)
+            {
+                return BadRequest("Operation failed, could not create or save user");
+            }
+            return Created(string.Empty, userId);
+        }
 
         [HttpGet("GetUserById/{userId}")]
         public async Task<ActionResult<User>> GetUserById(int userId)

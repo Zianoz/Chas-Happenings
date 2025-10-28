@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.CommentDTOs;
 using Application.DTOs.UserDTOs;
+using Domain.Enums;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,19 @@ namespace Application.Mappers.DTOMappers
                 Role = user.Role,
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 UserDescription = user.UserDescription
+            };
+        }
+
+        public static User CreateUserByDTOMapper(CreateUserDTO userDTO)
+        {
+            return new User
+            {
+                Username = userDTO.Username,
+                PasswordHash = userDTO.Password,
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                Email = userDTO.Email,
+                Role = UserRoles.Student
             };
         }
     }
