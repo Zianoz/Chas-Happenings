@@ -29,6 +29,17 @@ namespace chas_happenings.Controllers
             return Created(string.Empty, userId);
         }
 
+        [HttpPut("UpdateUserById/{userId}")]
+        public async Task<ActionResult> UpdateUserById(int userId, UpdateUserDTO updateUserDTO)
+        {
+            var result = await _userService.UpdateUserServicesAsync(userId, updateUserDTO);
+            if (result == false)
+            {
+                return NotFound($"User with id {userId} not found.");
+            }
+            return Ok($"User with id {userId} updated successfully.");
+        }
+
         [HttpGet("GetUserById/{userId}")]
         public async Task<ActionResult<User>> GetUserById(int userId)
         {
