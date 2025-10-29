@@ -2,6 +2,7 @@
 using Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace chas_happenings.Controllers
 {
@@ -16,16 +17,60 @@ namespace chas_happenings.Controllers
             _EventServices = eventServices;
         }
 
-        [HttpPost("Create")]
-        public async Task<ActionResult<int>> CreateEvent(CreateEventDTO Event)
+        [HttpPost("vreate")]
+        public async Task<ActionResult<int>> CreateEvent(CreateEventDTO Event,int userId)
         {
-            var eventId = await _EventServices.AddEventServicesAsync(Event);
-
-            if(eventId==0||eventId==null)
+            if(await _EventServices.AddEventServicesAsync(Event, userId))
             {
-                return BadRequest("operation failed, could not create or save event");
+                return Ok("event created");
+                
             }
-            return Ok(eventId);
+            return BadRequest("operation failed, could not create or save event");
+        }
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult<int>> DeleteEvent(int eventId)
+        {
+            if(await _EventServices.DeleteEventsByIdServicesAsync(eventId))
+            {
+                return Ok("event deleted");
+            }
+            return BadRequest("operation failed, No updates were made to the event");
+        }
+
+        public async Task<ActionResult<GetEventCalenderDisplayDTO>> GetByIdC(int eventId)
+        {
+            await _EventServices.GetEventByIdDisplayDataServicesAsync(eventId);
+        }
+
+        public async Task<ActionResult<int>> GetCalenderDisplayData(CreateEventDTO Event, int userId)
+        {
+
+        }
+
+        public async Task<ActionResult<int>> GetWithExtraData(CreateEventDTO Event, int userId)
+        {
+
+        }
+
+        public async Task<ActionResult<int>> GetByTags(CreateEventDTO Event, int userId)
+        {
+
+        }
+
+        public async Task<ActionResult<int>> GetByDate(CreateEventDTO Event, int userId)
+        {
+
+        }
+
+        public async Task<ActionResult<int>> GetByType(CreateEventDTO Event, int userId)
+        {
+
+        }
+
+        public async Task<ActionResult<int>> UpdateEvent(CreateEventDTO Event, int userId)
+        {
+
         }
     }
 }
