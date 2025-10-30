@@ -41,5 +41,19 @@ namespace Application.Mappers.DTOMappers
                 Role = UserRoles.Student
             };
         }
+
+        //?? is a null-coalescing operator it means, If the value on the left is not null, use it. If it is null, use the value on the right instead.
+        //So in this context, if the user did send a new field value replace it. Else do not change it.
+        public static User UpdateUserByDTOMapper(User user, UpdateUserDTO updateUserDTO)
+        {
+            user.FirstName = updateUserDTO.FirstName ?? user.FirstName;
+            user.LastName = updateUserDTO.LastName ?? user.LastName;
+            user.Phone = updateUserDTO.Phone ?? user.Phone;
+            user.ProfilePictureUrl = updateUserDTO.ProfilePictureUrl ?? user.ProfilePictureUrl;
+            user.UserDescription = updateUserDTO.UserDescription ?? user.UserDescription;
+            return user;
+        }
+
+
     }
 }

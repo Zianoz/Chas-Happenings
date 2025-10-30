@@ -15,7 +15,7 @@ namespace Application.Interfaces.IServices
         Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId); //Jing
         Task<bool> DeleteUserByIdServicesAsync(int userId);//Jing
         Task<int> AddUserServicesAsync(CreateUserDTO userDTO);//Zian
-        Task<bool> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO);//Zian
+        Task<int> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO);//Zian
 
         //extra user operations
         Task<GetUserAllDataDTO?> GetUserAllDataAsync(int userId);// includes events created, comments, attending, interested

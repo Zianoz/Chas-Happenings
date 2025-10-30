@@ -40,9 +40,12 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return user.Id;
         }
-        public Task<int> UpdateUserRepoAsync(User user)
+        public async Task<int> UpdateUserRepoAsync(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return user.Id;
+
         }
 
         // Admin Endpoints 

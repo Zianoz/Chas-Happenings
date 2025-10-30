@@ -30,10 +30,10 @@ namespace chas_happenings.Controllers
         }
 
         [HttpPut("UpdateUserById/{userId}")]
-        public async Task<ActionResult> UpdateUserById(int userId, UpdateUserDTO updateUserDTO)
+        public async Task<ActionResult<int>> UpdateUserById(int userId, UpdateUserDTO updateUserDTO)
         {
-            var result = await _userService.UpdateUserServicesAsync(userId, updateUserDTO);
-            if (result == false)
+            var updatedUserId = await _userService.UpdateUserServicesAsync(userId, updateUserDTO);
+            if (updatedUserId <= 0)
             {
                 return NotFound($"User with id {userId} not found.");
             }

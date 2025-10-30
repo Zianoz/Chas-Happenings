@@ -47,19 +47,24 @@ namespace Application.Services
                 throw new Exception("Failed to delete the user from the database.");
             }
         }
-        public Task<int> AddUserServicesAsync(CreateUserDTO userDTO)
+        public async Task<int> AddUserServicesAsync(CreateUserDTO userDTO)
         {
             var user = DTOUserMapper.CreateUserByDTOMapper(userDTO);
 
             //ASP.NET Identity built in password hasher, send in user and plain password, get back hashed password
             user.PasswordHash = _passwordHasher.HashPassword(user, userDTO.Password);
 
-            var userId = _userRepo.AddUserRepoAsync(user);
-            return userId;
+            return await _userRepo.AddUserRepoAsync(user);
         }
-        public Task<bool> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO)
+        public async Task<int> UpdateUserServicesAsync(int userId, UpdateUserDTO updateUserDTO)
         {
-            throw new NotImplementedException();
+            var user = await _userRepo.GetUserByIdRepoAsync(userId);
+            if (user == null)
+            {
+                throw new Exception($"User with id {userId} not found.");
+            }
+            var updatedUser = DTOUserMapper.UpdateUserByDTOMapper(user, updateUserDTO);
+            return await _userRepo.UpdateUserRepoAsync(updatedUser);
         }
         //extra user operations
         public async Task<GetUserAllDataDTO?> GetUserAllDataAsync(int userId)
