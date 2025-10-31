@@ -10,28 +10,28 @@ namespace Application.Mappers.DTOMappers
     {
         public static void Mapper<Tmodel, Tdto>(Tmodel model, Tdto dto) where Tmodel : class where Tdto : class
         {
-            var modelFeildsList = typeof(Tmodel).GetProperties();
-            var dtoFeildsList = typeof(Tdto).GetProperties();
+            var modelFieldsList = typeof(Tmodel).GetProperties();
+            var dtoFieldsList = typeof(Tdto).GetProperties();
 
-            foreach (var feildProperty in modelFeildsList)
+            foreach (var fieldProperty in modelFieldsList)
             {
-                var modelPropertyValue = feildProperty.GetValue(model);
+                var modelPropertyValue = fieldProperty.GetValue(model);
 
                 if (modelPropertyValue == null)
                 {
                     continue;
                 }
 
-                var dtoFeildproperty = dtoFeildsList.FirstOrDefault(f => f.Name == feildProperty.Name);
+                var dtoFieldproperty = dtoFieldsList.FirstOrDefault(f => f.Name == fieldProperty.Name);
 
-                if (dtoFeildproperty == null)
+                if (dtoFieldproperty == null)
                 {
                     continue;
                 }
 
-                if (dtoFeildproperty.PropertyType.IsInstanceOfType(modelPropertyValue))
+                if (dtoFieldproperty.PropertyType.IsInstanceOfType(modelPropertyValue))
                 {
-                    dtoFeildproperty.SetValue(dto, modelPropertyValue);
+                    dtoFieldproperty.SetValue(dto, modelPropertyValue);
                 }
             }
         }
