@@ -17,8 +17,8 @@ namespace chas_happenings.Controllers
             _EventServices = eventServices;
         }
 
-        [HttpPost("vreate")]
-        public async Task<ActionResult<int>> CreateEvent(CreateEventDTO Event,int userId)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateEvent([FromBody] CreateEventDTO Event,[FromQuery] int userId)
         {
             if(await _EventServices.AddEventServicesAsync(Event, userId))
             {
@@ -28,8 +28,8 @@ namespace chas_happenings.Controllers
             return BadRequest("operation failed, could not create or save event");
         }
 
-        [HttpDelete("delete")]
-        public async Task<ActionResult<int>> DeleteEvent(int eventId)
+        [HttpDelete("delete/{eventId}")]
+        public async Task<IActionResult> DeleteEvent(int eventId)
         {
             if(await _EventServices.DeleteEventsByIdServicesAsync(eventId))
             {
@@ -38,39 +38,50 @@ namespace chas_happenings.Controllers
             return BadRequest("operation failed, No updates were made to the event");
         }
 
-        public async Task<ActionResult<GetEventCalenderDisplayDTO>> GetByIdC(int eventId)
+        [HttpGet("getbyid/{eventId}")]
+        public async Task<ActionResult<GetEventCalenderDisplayDTO>> GetByIdDisplayData(int eventId)
         {
-            await _EventServices.GetEventByIdDisplayDataServicesAsync(eventId);
+            var eventData = _EventServices.GetEventByIdDisplayDataServicesAsync(eventId);
+
+            return Ok(eventData);
         }
 
-        public async Task<ActionResult<int>> GetCalenderDisplayData(CreateEventDTO Event, int userId)
+        [HttpGet("getbyid/extradata/{eventId}")]
+        public async Task<ActionResult<GetEventWithExtraDataDTO>> GetByIdExtraData(int eventId)
         {
+            var evenData = await _EventServices.GetEventByIdWithExtraDataServicesAsync(eventId);
 
+            return Ok(evenData);
         }
-
-        public async Task<ActionResult<int>> GetWithExtraData(CreateEventDTO Event, int userId)
+        [HttpGet("getbytags/getbydaterange")]
+        public async Task<ActionResult<List<GetEventCalenderDisplayDTO>>> GetByTagsAndDateRange([FromQuery] HashSet<string> eventTags, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
+            var eventData = await _EventServices.GetEventsByCategoriesAndDateServicesAsync(eventTags, startDate, endDate);
 
+            return Ok(endDate);
         }
-
-        public async Task<ActionResult<int>> GetByTags(CreateEventDTO Event, int userId)
+        [HttpGet("getbydate")]
+        public async Task<ActionResult<List<GetEventCalenderDisplayDTO>>> GetByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
+            var eventData = await _EventServices.GetEventsByDateTimeServicesAsync(startDate, endDate);
 
+            return Ok(eventData);
         }
-
-        public async Task<ActionResult<int>> GetByDate(CreateEventDTO Event, int userId)
+        [HttpGet("getbytype/getbydaterange")]
+        public async Task<ActionResult<List<GetEventCalenderDisplayDTO>>> GetByTypeAndDateRange([FromQuery] HashSet<string> eventType,[FromQuery] DateTime startDate,[FromQuery] DateTime endDate)
         {
+            var eventData = await _EventServices.GetEventsByTypeAndDateServicesAsync(eventType, startDate, endDate);
 
+            return Ok(eventData);
         }
-
-        public async Task<ActionResult<int>> GetByType(CreateEventDTO Event, int userId)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventDTO dto)
         {
-
-        }
-
-        public async Task<ActionResult<int>> UpdateEvent(CreateEventDTO Event, int userId)
-        {
-
+            if(await _EventServices.UpdateEventServicesAsync(dto))
+            {
+                return Ok("Event updated");
+            }
+            return BadRequest("Event failed to update, no changes were made to the database");
         }
     }
 }
