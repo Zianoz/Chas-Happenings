@@ -2,7 +2,9 @@
 using Application.DTOs.TagDTOs;
 using Application.DTOs.UserDTOs;
 using Application.DTOs.UserEventDTOs;
+using Domain.Enums;
 using Domain.Models;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace Application.Mappers.DTOMappers
 {
-    internal class DTOEventMapper
+    internal static class DTOEventMapper
     {
-        public static Event CreateEventModelFromDTO(CreateEventDTO eventDTO)
+        public static Event CreateEventFromDTO(CreateEventDTO eventDTO)
         {
             return new Event
             {
@@ -31,7 +33,7 @@ namespace Application.Mappers.DTOMappers
 
             };
         }
-        public static GetEventWithExtraDataDTO GetEventWithExtraDataDTO(Event Event)
+        public static GetEventWithExtraDataDTO MappEventWithExtraDataDTO(Event Event)
         {
             return new GetEventWithExtraDataDTO
             {
@@ -69,6 +71,17 @@ namespace Application.Mappers.DTOMappers
 
             };
         }
-   
+        public static GetEventCalenderDisplayDTO MappEventCalenderDisplayData(Event Event)
+        {
+            return new GetEventCalenderDisplayDTO
+            {
+                Id = Event.Id,
+                Title = Event.Title,
+                EventDate = Event.EventDate,
+                StartTime = Event.StartTime,
+                EndTime = Event.EndTime,
+                Type = Event.Type,
+            };
+        }   
     }
 }

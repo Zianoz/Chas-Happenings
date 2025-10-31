@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.EvenDTOs
 {
-    internal class GetEventWithExtraDataDTO
+    public class GetEventWithExtraDataDTO
     {
         [Key]
         public int Id { get; set; }

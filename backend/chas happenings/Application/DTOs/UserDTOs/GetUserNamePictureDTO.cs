@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.UserDTOs
 {
-    internal class GetUserNamePictureDTO
+    public class GetUserNamePictureDTO
     {
         public int Id { get; set; }
         public string Username { get; set; }

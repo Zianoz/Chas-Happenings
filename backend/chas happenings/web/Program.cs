@@ -35,7 +35,7 @@ namespace chas_happenings
             });
 
             builder.Services.AddScoped<IEventRepositories, EventRepositories>();
-            builder.Services.AddScoped<IEventServices, EventServises>();
+            builder.Services.AddScoped<IEventServices, EventServices>();
 
             builder.Services.AddScoped<ITagRepositories, TagRepositories>();
             builder.Services.AddScoped<ITagServices, TagServices>();

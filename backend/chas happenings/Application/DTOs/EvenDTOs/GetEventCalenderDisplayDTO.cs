@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Application.DTOs.UserEventDTOs;
+using Domain.Enums;
+using Domain.Models;
 using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.EvenDTOs
 {
-    internal class GetEventCalenderDisplayDataDTO
+    public class GetEventCalenderDisplayDTO
     {
         [Key]
         public int Id { get; set; }
@@ -20,8 +22,6 @@ namespace Application.DTOs.EvenDTOs
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
         [Required]
-        public string EventType { get; set; }
-        //får se om vi väljer att displaya creattor i
-        public List<int> Interactions { get; set; } = new List<int>();
+        public EventType Type { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.TagDTOs
 {
-    internal class GetTagNameDTO
+    public class GetTagNameDTO
     {
         public string TagName { get; set; }
     }

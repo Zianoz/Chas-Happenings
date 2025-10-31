@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.EvenDTOs;
 using Domain.Models;
+using Domain.Models.ConectionTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,15 @@ namespace Application.Interfaces.IServices
 {
     public interface IEventServices
     {
-        Task<Event?> GetEventByIdServicesAsync(int EventId);
-        Task<int> DeleteEventsByIdServicesAsync(int EventId);
-        Task<int> AddEventServicesAsync(CreateEventDTO Event);
-        Task<int> UpdateEventServicesAsync(Event Event);
+        Task<GetEventCalenderDisplayDTO> GetEventByIdDisplayDataServicesAsync(int eventId);
+        Task<GetEventWithExtraDataDTO> GetEventByIdWithExtraDataServicesAsync(int eventId);
+        Task<bool> DeleteEventsByIdServicesAsync(int EventId); // DONE
+        Task<bool> AddEventServicesAsync(CreateEventDTO Event, int userId); // DONE
+        Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto); // DONE - revisit (update tags too?)
 
-        Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> EventTags, DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> EventType, DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> eventTags, DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByTypeAndDateServicesAsync(HashSet<string> eventType, DateTime startdate, DateTime endDate);
 
     }
 }
