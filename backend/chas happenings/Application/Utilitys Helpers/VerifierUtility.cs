@@ -25,5 +25,13 @@ namespace Application.Utilitys_Helpers
             }
             return databaseObject;
         }
+        public static int VerifyResponeReturnId((int response, int id)repoResponse)
+        {
+            if(repoResponse.response>0)
+            {
+                return repoResponse.id;
+            }
+            throw new InvalidDataException($"Database operation failed, no user was changed");
+        }
     }
 }
