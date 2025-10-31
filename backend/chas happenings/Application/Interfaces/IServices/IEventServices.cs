@@ -17,9 +17,9 @@ namespace Application.Interfaces.IServices
         Task<bool> AddEventServicesAsync(CreateEventDTO Event, int userId); // DONE
         Task<bool> UpdateEventServicesAsync(UpdateEventDTO eventDto); // DONE - revisit (update tags too?)
 
-        Task<List<Event?>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> eventTags, DateTime startdate, DateTime endDate);
-        Task<List<Event?>> GetEventsByTypeAndDateServicesAsync(HashSet<string> eventType, DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByDateTimeServicesAsync(DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByCategoriesAndDateServicesAsync(HashSet<string> eventTags, DateTime startdate, DateTime endDate);
+        Task<List<GetEventCalenderDisplayDTO>> GetEventsByTypeAndDateServicesAsync(HashSet<string> eventType, DateTime startdate, DateTime endDate);
 
     }
 }
