@@ -8,8 +8,8 @@ namespace Domain.Enums
 {
     public enum Interactions
     {
-        cretator,
-        organizor,
+        creator,
+        organizer,
         liked,
         attending
     }
