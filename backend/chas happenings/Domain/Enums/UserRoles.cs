@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Irepositories
+namespace Domain.Enums
 {
-    public interface IUserRepository
+    public enum UserRoles
     {
-
+        Student,
+        Teacher,
+        Admin
     }
 }
