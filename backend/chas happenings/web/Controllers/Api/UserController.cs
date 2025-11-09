@@ -5,7 +5,7 @@ using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

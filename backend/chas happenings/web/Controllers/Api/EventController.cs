@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

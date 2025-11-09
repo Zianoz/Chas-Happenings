@@ -2,7 +2,7 @@ using System.Diagnostics;
 using chas_happenings.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.MVC
 {
     public class HomeController : Controller
     {
