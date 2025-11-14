@@ -1,22 +1,282 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
+/* Navgation bar */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.nav-link.text-light:hover {
+    color: #ffc107 !important; /* Brighter yellow */
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+/* Book button styling - fitted oval */
+.book-button {
+    border: 2px solid #ffd700 !important;
+    border-radius: 50px !important;
+    padding: 0.4rem 1.2rem !important;
+    margin: 0 0.3rem !important;
+    background-color: transparent !important;
+    color: #ffd700 !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .book-button {
+        padding: 0.35rem 1rem !important;
+        margin: 0.2rem 0 !important;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ensure consistent nav item alignment */
+.navbar-nav.align-items-center .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Improved typography */
+.intro-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    line-height: 1.7;
+}
+
+.chef-highlight, .chef-card {
+    transition: transform 0.3s ease;
+}
+
+    .chef-highlight:hover, .chef-card:hover {
+        transform: translateY(-2px);
+    }
+
+/* Better text readability */
+.text-start p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* Responsive text */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1.1rem;
+    }
+}
+
+/* Seasonal dishes styling */
+.season-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.4rem 1rem !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.spring-badge {
+    background: rgba(40, 167, 69, 0.9);
+    color: white;
+}
+
+.summer-badge {
+    background: rgba(255, 193, 7, 0.9);
+    color: black;
+}
+
+.autumn-badge {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+}
+
+.winter-badge {
+    background: rgba(23, 162, 184, 0.9);
+    color: white;
+}
+
+.dish-card {
+    position: relative;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+    .dish-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .dish-card img {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .dish-card:hover img {
+        transform: scale(1.05);
+    }
+
+/* Ensure title has enough space */
+.card-title {
+    margin-bottom: 1rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* Calendar Theme Styles */
+.calendar-theme {
+    border: 2px solid #e9ecef;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+}
+
+.calendar-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(13, 110, 253, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(13, 110, 253, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.calendar-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    margin: -2rem -2rem 2rem -2rem;
+    padding: 2rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: white;
+}
+
+    .calendar-header h1,
+    .calendar-header .lead {
+        color: white !important;
+    }
+
+.calendar-date-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.calendar-feature {
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+    .calendar-feature:hover {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+        transform: translateY(-2px);
+    }
+
+.mini-calendar-preview {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-date {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+    .calendar-date:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .intro-card {
+        padding: 2rem !important;
+    }
+
+    .calendar-header {
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        padding: 1.5rem;
+    }
+
+    .calendar-date-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+
+/* Hover effects for buttons */
+.btn-primary:hover {
+    background-color: #bbdefb !important;
+    border-color: #90caf9 !important;
+    color: #0d47a1 !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #e3f2fd !important;
+    border-color: #64b5f6 !important;
+    color: #1565c0 !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Icon hover effects */
+.btn-primary:hover i {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+/* Header background with light blue */
+.bg-light.bg-opacity-25 {
+    background-color: rgba(227, 242, 253, 0.7) !important;
 }

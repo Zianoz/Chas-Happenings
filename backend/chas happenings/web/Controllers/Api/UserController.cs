@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

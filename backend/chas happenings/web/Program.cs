@@ -5,8 +5,10 @@ using Domain.Models;
 using Infrastructure.Data;
 //using Infrastructure.Repositories.IRepositories;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;  // Add this if needed
 using Swashbuckle.AspNetCore.SwaggerUI; // Add this if needed
-using Microsoft.AspNetCore.Identity;
 
 
 //using Application.Services.IServices;
@@ -51,6 +52,9 @@ namespace chas_happenings
 
             //Register JWT service
             builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IAdminService, AdminService>();
+
 
             //Add CORS policy to allow frontend requests
             builder.Services.AddCors(options =>
