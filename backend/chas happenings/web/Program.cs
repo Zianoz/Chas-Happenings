@@ -31,7 +31,7 @@ namespace chas_happenings
             {
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection"),
-                    b =>b.MigrationsAssembly("chas_happenings.Infrastructure"));
+                    b => b.MigrationsAssembly("chas_happenings.Infrastructure"));
             });
 
             builder.Services.AddScoped<IEventRepositories, EventRepositories>();
@@ -49,7 +49,23 @@ namespace chas_happenings
             //Register password hasher service
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+            //Register JWT service
+            builder.Services.AddScoped<IJwtService, JwtService>();
 
+            //Add CORS policy to allow frontend requests
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                        "http://localhost:5173",  // Vite default port
+                        "http://localhost:3000"   // Alternative React port
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
 
             //Add swagger for API testing
             builder.Services.AddControllersWithViews();
@@ -83,6 +99,9 @@ namespace chas_happenings
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Enable CORS - MUST be after UseRouting and before UseAuthorization
+            app.UseCors("AllowFrontend");
 
             app.UseAuthorization();
 

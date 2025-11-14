@@ -12,6 +12,7 @@ namespace Application.Interfaces.Irepositories
     {
         // Standard CRUD Operationer
         Task<User?> GetUserByIdRepoAsync(int userId);
+        Task<User> GetUserByEmail(string email);
         Task<bool> DeleteUserByIdRepoAsync(int userId);
         Task<int> AddUserRepoAsync(User user);
         Task<int> UpdateUserRepoAsync(User user);

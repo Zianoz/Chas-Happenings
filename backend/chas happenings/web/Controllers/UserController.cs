@@ -18,7 +18,14 @@ namespace chas_happenings.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("LoginUser")]
+        public async Task<ActionResult<string>> LoginUserAsync(LoginUserDTO dto)
+        {
+            var token = await _userService.LoginUserServiceAsync(dto);
+            return Created(string.Empty, token);
+        }
+
+        [HttpPost("CreateUser")]
         public async Task<ActionResult<int>> CreateUserAsync(CreateUserDTO userDTO)
         {
             var userId = await _userService.AddUserServicesAsync(userDTO);

@@ -17,13 +17,29 @@ namespace Application.Services
     {
         private readonly IUserRepositories _userRepo;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserServices(IUserRepositories userRepo, IPasswordHasher<User> passwordHasher)
+        private readonly IJwtService _jwtService;
+        public UserServices(IUserRepositories userRepo, IPasswordHasher<User> passwordHasher, IJwtService jwtService)
         {
             _userRepo = userRepo;
             _passwordHasher = passwordHasher;
+            _jwtService = jwtService;
         }
 
         //stand CRUD Operations
+        public async Task<string> LoginUserServiceAsync(LoginUserDTO dto)
+        {
+            var User = await _userRepo.GetUserByEmail(dto.Email);
+            if (User == null)
+            {
+                throw new Exception("Invalid Email or password.");
+            }
+            var verificationResult = _passwordHasher.VerifyHashedPassword(User, User.PasswordHash, dto.Password);
+            if (verificationResult == PasswordVerificationResult.Failed)
+            {
+                throw new Exception("Invalid Email or password.");
+            }
+            return await _jwtService.GenerateToken(User);
+        }
         public async Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId)
         {
             var user = await _userRepo.GetUserByIdRepoAsync(userId);
