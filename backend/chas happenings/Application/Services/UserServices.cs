@@ -3,13 +3,14 @@ using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Application.Mappers.DTOMappers;
 using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services
 {
@@ -17,13 +18,29 @@ namespace Application.Services
     {
         private readonly IUserRepositories _userRepo;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserServices(IUserRepositories userRepo, IPasswordHasher<User> passwordHasher)
+        private readonly IJwtService _jwtService;
+        public UserServices(IUserRepositories userRepo, IPasswordHasher<User> passwordHasher, IJwtService jwtService)
         {
             _userRepo = userRepo;
             _passwordHasher = passwordHasher;
+            _jwtService = jwtService;
         }
 
         //stand CRUD Operations
+        public async Task<string> LoginUserServiceAsync(LoginUserDTO dto)
+        {
+            var user = await _userRepo.GetUserByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                throw new InvalidCredentialException("Invalid Email or password.");
+            }
+            var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (verificationResult == PasswordVerificationResult.Failed)
+            {
+                throw new InvalidCredentialException("Invalid Email or password.");
+            }
+            return await _jwtService.GenerateToken(user);
+        }
         public async Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId)
         {
             var user = await _userRepo.GetUserByIdRepoAsync(userId);

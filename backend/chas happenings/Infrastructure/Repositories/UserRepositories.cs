@@ -25,6 +25,11 @@ namespace Infrastructure.Repositories
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
         public async Task<bool> DeleteUserByIdRepoAsync(int userId)
         {
             var results = await _context.Users.Where(u => u.Id == userId).ExecuteDeleteAsync();

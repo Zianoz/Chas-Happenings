@@ -4,6 +4,7 @@ using Application.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Authentication;
 
 namespace chas_happenings.Controllers.Api
 {
@@ -18,7 +19,26 @@ namespace chas_happenings.Controllers.Api
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("LoginUser")]
+        public async Task<ActionResult<string>> LoginUserAsync(LoginUserDTO dto)
+        {
+            try
+            {
+                var token = await _userService.LoginUserServiceAsync(dto);
+                return Ok(new { Token = token });
+            }
+            catch (InvalidCredentialException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                // Log it (e.g. using ILogger)
+                return StatusCode(500, new { message = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpPost("CreateUser")]
         public async Task<ActionResult<int>> CreateUserAsync(CreateUserDTO userDTO)
         {
             var userId = await _userService.AddUserServicesAsync(userDTO);
