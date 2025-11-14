@@ -12,6 +12,7 @@ namespace Domain.Models
         public int Id { get; set; }
         public string TagName { get; set; }
         [ForeignKey("Events")]
+        [Column("EventId")]
         public int FK_event { get; set; }
         public ICollection<Event> Events { get; set; } = new List<Event>();
     }

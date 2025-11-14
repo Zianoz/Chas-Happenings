@@ -72,6 +72,7 @@ namespace chas_happenings
             });
 
             //Add swagger for API testing
+            builder.Services.AddControllers();
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -109,6 +110,7 @@ namespace chas_happenings
 
             app.UseAuthorization();
 
+            app.MapControllers();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
