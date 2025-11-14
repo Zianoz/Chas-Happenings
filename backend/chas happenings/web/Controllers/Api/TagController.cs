@@ -4,7 +4,7 @@ using Application.Interfaces.IServices;
 using Application.DTOs.TagDTOs;
 using Domain.Models;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

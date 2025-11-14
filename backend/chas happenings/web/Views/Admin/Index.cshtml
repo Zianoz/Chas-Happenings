@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <div class="bg-light bg-opacity-25 p-4 rounded-3 border border-primary border-2">
+                    <h1 class="display-6 fw-bold mb-3 text-primary">
+                        <i class="fas fa-user-shield me-3"></i>Admin Dashboard
+                    </h1>
+                    <p class="lead mb-0 text-muted">Welcome back, Administrator! Manage your work efficiently.</p>
+                </div>
+            </div>
+
+            <!-- Admin Menu Buttons -->
+            <div class="row g-3 justify-content-center">
+                <!-- Event Management -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="d-grid">
+                        <a asp-controller="Event" asp-action="EventMenu" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
+                            <i class="fas fa-calendar-day me-2" style="color: #1976d2;"></i>Event Management
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tag Management -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="d-grid">
+                        <a asp-controller="Tag" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
+                            <i class="fas fa-tags me-2" style="color: #388e3c;"></i>Tag Management
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Comment Management -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="d-grid">
+                        <a asp-controller="Comment" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
+                            <i class="fas fa-comments me-2" style="color: #f57c00;"></i>Comment Management
+                        </a>
+                    </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="d-grid">
+                        <a asp-controller="User" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
+                            <i class="fas fa-user-cog me-2" style="color: #7b1fa2;"></i>User Management
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logout Button - Separate Line -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="d-grid">
+                        <form asp-controller="Admin" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-primary btn-lg py-3 w-100" style="border-color: #bbdefb; color: #1565c0;">
+                                <i class="fas fa-sign-out-alt me-2" style="color: #d32f2f;"></i>Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Note -->
+            <div class="text-center mt-5">
+                <p class="text-muted small">
+                    <i class="fas fa-shield-alt text-primary me-1"></i>
+                    Secure Admin Panel • Last login: @DateTime.Now.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

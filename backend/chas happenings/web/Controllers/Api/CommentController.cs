@@ -5,7 +5,7 @@ using Application.DTOs.CommentDTO;
 using Domain.Models;
 using Application.DTOs.CommentDTOs;
 
-namespace chas_happenings.Controllers
+namespace chas_happenings.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
