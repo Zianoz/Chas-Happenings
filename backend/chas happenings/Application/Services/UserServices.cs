@@ -3,13 +3,14 @@ using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Application.Mappers.DTOMappers;
 using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services
 {
@@ -28,17 +29,17 @@ namespace Application.Services
         //stand CRUD Operations
         public async Task<string> LoginUserServiceAsync(LoginUserDTO dto)
         {
-            var User = await _userRepo.GetUserByEmail(dto.Email);
-            if (User == null)
+            var user = await _userRepo.GetUserByEmailAsync(dto.Email);
+            if (user == null)
             {
-                throw new Exception("Invalid Email or password.");
+                throw new InvalidCredentialException("Invalid Email or password.");
             }
-            var verificationResult = _passwordHasher.VerifyHashedPassword(User, User.PasswordHash, dto.Password);
+            var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (verificationResult == PasswordVerificationResult.Failed)
             {
-                throw new Exception("Invalid Email or password.");
+                throw new InvalidCredentialException("Invalid Email or password.");
             }
-            return await _jwtService.GenerateToken(User);
+            return await _jwtService.GenerateToken(user);
         }
         public async Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId)
         {

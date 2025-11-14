@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
