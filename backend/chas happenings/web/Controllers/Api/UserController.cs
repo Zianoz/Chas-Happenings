@@ -18,6 +18,13 @@ namespace chas_happenings.Controllers.Api
             _userService = userService;
         }
 
+        // GET: /api/User/test (for browser testing)
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("API is running correctly!");
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> CreateUserAsync(CreateUserDTO userDTO)
         {
