@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Domain.Enums;
 
 namespace Infrastructure.Data
 {
@@ -37,6 +39,22 @@ namespace Infrastructure.Data
             var NotificationModel = modelBuilder.Entity<Notification>();
             var UserEventModel = modelBuilder.Entity<UserEvent>();
 
+            // Seed admin user with hardcoded password hash for "123"
+            // This hash is static to avoid EF Core pending model changes warning
+            UserModel.HasData(new User
+            {
+                Id = 1,
+                Username = "admin",
+                FirstName = "Admin",
+                LastName = "User",
+                Email = "admin@chashappenings.com",
+                Phone = null,
+                Course = null,
+                Role = UserRoles.Admin,
+                ProfilePictureUrl = null,
+                UserDescription = "System Administrator",
+                PasswordHash = "AQAAAAIAAYagAAAAEOF5qkGEC7KpKy9xlZYKZYWgOQUQlKqMDKh/ludIwt3VY2haVwXqL0HU9C1IiO9eAg=="
+            });
         }
     }
 }

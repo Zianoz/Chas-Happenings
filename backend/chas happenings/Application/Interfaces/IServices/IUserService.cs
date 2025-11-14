@@ -12,6 +12,7 @@ namespace Application.Interfaces.IServices
     public interface IUserService
     {
         //stand CRUD Operations
+        Task<string> LoginUserServiceAsync(LoginUserDTO dto);
         Task<GetUserByIdDTO?> GetUserByIdServicesAsync(int userId); //Jing
         Task<bool> DeleteUserByIdServicesAsync(int userId);//Jing
         Task<int> AddUserServicesAsync(CreateUserDTO userDTO);//Zian
