@@ -25,6 +25,13 @@ namespace Infrastructure.Repositories
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
+
+        public async Task<User?> GetUserByUsernameRepoAsync(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return user;
+        }
+
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -59,5 +66,15 @@ namespace Infrastructure.Repositories
             var allUsers = await _context.Users.ToListAsync();
             return allUsers;
         }
+
+        public async Task<IEnumerable<User>> SearchUserRepoAsync(string query)
+        {
+            return _context.Users
+                .Where(u => u.Username.Contains(query) ||
+                    u.Id.ToString() == query)
+                .ToList();
+        }
+
+
     }
 }

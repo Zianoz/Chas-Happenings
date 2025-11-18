@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<Domain.Models.User>
+
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
@@ -18,7 +19,7 @@
                         <!-- Event Management Button -->
                         <button type="button" 
                                 class="list-group-item list-group-item-action admin-nav-btn active" 
-                                onclick="showSection('event-management')"
+                                onclick="showSection('event-management', this)"
                                 style="border-left: 4px solid #1976d2;">
                             <i class="fas fa-calendar-day me-2" style="color: #1976d2;"></i>
                             Event Management
@@ -27,7 +28,7 @@
                         <!-- User Management Button -->
                         <button type="button" 
                                 class="list-group-item list-group-item-action admin-nav-btn" 
-                                onclick="showSection('user-management')"
+                                onclick="showSection('user-management', this)"
                                 style="border-left: 4px solid #7b1fa2;">
                             <i class="fas fa-user-cog me-2" style="color: #7b1fa2;"></i>
                             User Management
@@ -36,7 +37,7 @@
                         <!-- Comment Management Button -->
                         <button type="button" 
                                 class="list-group-item list-group-item-action admin-nav-btn" 
-                                onclick="showSection('comment-management')"
+                                onclick="showSection('comment-management', this)"
                                 style="border-left: 4px solid #f57c00;">
                             <i class="fas fa-comments me-2" style="color: #f57c00;"></i>
                             Comment Management
@@ -45,7 +46,7 @@
                         <!-- Tag Management Button -->
                         <button type="button" 
                                 class="list-group-item list-group-item-action admin-nav-btn" 
-                                onclick="showSection('tag-management')"
+                                onclick="showSection('tag-management', this)"
                                 style="border-left: 4px solid #388e3c;">
                             <i class="fas fa-tags me-2" style="color: #388e3c;"></i>
                             Tag Management
@@ -78,9 +79,9 @@
                     <!-- Search Bar -->
                     <div class="input-group me-3" style="width: 300px;">
                         <input type="text" class="form-control" placeholder="Search..." id="searchInput">
-                        <button class="btn btn-outline-primary" type="button">
+                        <button class="btn btn-outline-primary" type="button" onclick="performSearch()">
                             <i class="fas fa-search"></i>
-                        </button>
+                        </button> 
                     </div>
                     <div class="text-muted small">
                         <i class="fas fa-shield-alt text-primary me-1"></i>
@@ -136,38 +137,104 @@
                         <a asp-controller="UserView" asp-action="CreateUser" class="btn btn-primary w-100 py-3">
                             <i class="fas fa-user-plus me-2"></i>Add User
                         </a>
-@*                         <a href="@Url.Action("CreateUser", "User")" class="btn btn-primary">
-                            Add User
-                        </a> *@
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Delete" class="btn btn-danger w-100 py-3">
+                        <a asp-controller="UserView" asp-action="DeleteUser" class="btn btn-danger w-100 py-3">
                             <i class="fas fa-user-times me-2"></i>Delete User
                         </a>
                     </div>
+@*                     <div class="col-md-6 col-lg-3">
+                        @if (TempData["SelectedUserId"] != null)
+                        {
+                            <!-- CASE 1: A USER IS ALREADY SELECTED → QUICK DELETE -->
+                            <a href="@Url.Action(" DeleteUserConfirmation", "UserView", new { id = TempData["SelectedUserId"] })"
+                               class="btn btn-danger w-100 py-3">
+                                <i class="fas fa-user-times me-2"></i>Delete User
+                            </a>
+                        }
+                        else
+                        {
+                            <!-- CASE 2: NO USER SELECTED → ASK FOR ID -->
+                            <a href="#"
+                               class="btn btn-danger w-100 py-3"
+                               data-bs-toggle="modal"
+                               data-bs-target="#askUserIdModal">
+                                <i class="fas fa-user-times me-2"></i>Delete User
+                            </a>
+                        }
+                    </div> *@
+
+
                     <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Edit" class="btn btn-warning w-100 py-3">
+                        <a asp-controller="UserView" asp-action="EditUser" class="btn btn-warning w-100 py-3">
                             <i class="fas fa-user-edit me-2"></i>Update User
                         </a>
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Index" class="btn btn-info w-100 py-3">
+                        <a asp-controller="UserView" asp-action="GetAllUsers" class="btn btn-info w-100 py-3">
                             <i class="fas fa-users me-2"></i>All Users
                         </a>
                     </div>
                 </div>
 
+               
                 <!-- User Search Results -->
                 <div class="mt-4">
-                    <div class="card">
-                        <div class="card-header bg-light">
+                    <div class="card" style="background-color: #e3f2fd;">
+                        <!-- Light blue -->
+                        <div class="card-header bg-primary text-white">
                             <h6 class="mb-0"><i class="fas fa-search me-2"></i>User Search Results</h6>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted mb-0">Search results for users will appear here...</p>
+                            @if (Model != null && Model.Any())
+                            {
+                                <div class="list-group">
+                                    @foreach (var user in Model)
+                                    {
+                                        <div class="mb-2 p-2 border rounded" style="background-color: #ffffff;">
+                                            <p><strong>Username:</strong> @user.Username</p>
+                                            <p><strong>ID:</strong> @user.Id</p>
+                                            <p><strong>Email:</strong> @user.Email</p>
+                                            <p><strong>Phone:</strong> @user.Phone</p>
+                                            <p><strong>Course:</strong> @user.Course</p>
+                                            <p><strong>Role:</strong> @user.Role</p>
+                                            <p><strong>Description:</strong> @user.UserDescription</p>
+                                            <div class="d-flex gap-2">
+
+                                                <!-- DELETE FORM -->
+                                                <form asp-controller="UserView"
+                                                      asp-action="DeleteUserConfirmation"
+                                                      method="post"
+                                                      class="d-inline">
+                                                    <input type="hidden" name="id" value="@user.Id" />
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Are you sure you want to delete this user?');">
+                                                        Delete
+                                                    </button>
+                                                </form>
+
+                                                <!-- EDIT BUTTON -->
+                                                <a class="btn btn-warning btn-sm"
+                                                   asp-controller="UserView"
+                                                   asp-action="EditUser"
+                                                   asp-route-id="@user.Id">
+                                                    Edit
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted mb-0">No users found for this search.</p>
+                            }
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <!-- Comment Management Content -->
@@ -245,36 +312,91 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- Delete Confirmation Model -->
+            <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="deleteUserForm" method="post" asp-action="DeleteUserConfirmed">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete user <strong id="modalUsername"></strong>?</p>
+                                <input type="hidden" name="id" id="modalUserId" value="" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
+<!-- AskUserId/Username model -->
+<div class="modal fade" id="askUserIdModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="DeleteUser">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter User ID or Username</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <label>User ID or Username</label>
+                    <input type="text" name="query" class="form-control" required />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Find User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    function showSection(sectionId) {
+    let activeSection = "@ViewBag.Section" || "event-management";
+    function showSection(sectionId, buttonElement = null) {
+
+        activeSection = sectionId; // <--- this is IMPORTANT
+
+
         // Hide all sections
         document.querySelectorAll('.content-section').forEach(section => {
             section.classList.add('d-none');
         });
-        
+
         // Remove active class from all buttons
         document.querySelectorAll('.admin-nav-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        
+
         // Show selected section
         document.getElementById(sectionId).classList.remove('d-none');
-        
-        // Add active class to clicked button
-        event.target.classList.add('active');
-        
-        // Update title and subtitle based on section
+
+        // When manually clicked, "buttonElement" will be passed in
+        if (buttonElement) {
+            buttonElement.classList.add('active');
+        }
+
+        // Update title/subtitle
         updateSectionTitle(sectionId);
     }
-    
+
     function updateSectionTitle(sectionId) {
         const titleElement = document.getElementById('content-title');
         const subtitleElement = document.getElementById('content-subtitle');
-        
+
         const titles = {
             'event-management': {
                 title: '<i class="fas fa-calendar-day me-2"></i>Event Management',
@@ -293,398 +415,62 @@
                 subtitle: 'Organize and manage content tags'
             }
         };
-        
+
         if (titles[sectionId]) {
             titleElement.innerHTML = titles[sectionId].title;
             subtitleElement.textContent = titles[sectionId].subtitle;
         }
     }
+
+    // 🌟 AUTO-SELECT SECTION ON PAGE LOAD
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectedSection = "@ViewBag.Section";
+
+        if (selectedSection) {
+            // Show the selected section
+            showSection(selectedSection);
+
+            // Highlight correct button
+            const btn = document.querySelector(
+                `[onclick="showSection('${selectedSection}', this)"]`
+            );
+            if (btn) btn.classList.add("active");
+        }
+    });
+
+        function performSearch() {
+        const query = document.getElementById("searchInput").value.trim();
+
+        if (!query) return;
+
+        if (activeSection === 'user-management') {
+            window.location.href = `/UserView/Search?query=${query}`;
+        }
+        else if (activeSection === 'event-management') {
+            window.location.href = `/Event/Search?query=${query}`;
+        }
+        else if (activeSection === 'tag-management') {
+            window.location.href = `/Tag/Search?query=${query}`;
+        }
+        else if (activeSection === 'comment-management') {
+            window.location.href = `/Comment/Search?query=${query}`;
+        }
+    }
+
+    var deleteUserModal = document.getElementById('deleteUserModal');
+    deleteUserModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Button that triggered the modal
+        var userId = button.getAttribute('data-userid');
+        var username = button.getAttribute('data-username');
+
+        // Update modal content
+        var modalUserIdInput = deleteUserModal.querySelector('#modalUserId');
+        var modalUsernameSpan = deleteUserModal.querySelector('#modalUsername');
+
+        modalUserIdInput.value = userId;
+        modalUsernameSpan.textContent = username;
+    });
+
 </script>
 
 
-
-
-@* 
-@{
-    ViewData["Title"] = "Admin Dashboard";
-}
-
-<div class="container-fluid py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <!-- Header Section -->
-            <div class="text-center mb-5">
-                <div class="bg-light bg-opacity-25 p-4 rounded-3 border border-primary border-2">
-                    <h1 class="display-6 fw-bold mb-3 text-primary">
-                        <i class="fas fa-user-shield me-3"></i>Admin Dashboard
-                    </h1>
-                    <p class="lead mb-0 text-muted">Welcome back, Administrator! Manage your work efficiently.</p>
-                </div>
-            </div>
-
-            <!-- Admin Menu Buttons -->
-            <div class="row g-3 justify-content-center">
-                <!-- Event Management -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="d-grid">
-                        <a asp-controller="Event" asp-action="EventMenu" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
-                            <i class="fas fa-calendar-day me-2" style="color: #1976d2;"></i>Event Management
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tag Management -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="d-grid">
-                        <a asp-controller="Tag" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
-                            <i class="fas fa-tags me-2" style="color: #388e3c;"></i>Tag Management
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Comment Management -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="d-grid">
-                        <a asp-controller="Comment" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
-                            <i class="fas fa-comments me-2" style="color: #f57c00;"></i>Comment Management
-                        </a>
-                    </div>
-                </div>
-
-                <!-- User Management -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="d-grid">
-                        <a asp-controller="User" asp-action="Index" class="btn btn-primary btn-lg py-3" style="background-color: #e3f2fd; border-color: #bbdefb; color: #1565c0;">
-                            <i class="fas fa-user-cog me-2" style="color: #7b1fa2;"></i>User Management
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Logout Button - Separate Line -->
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-6 col-lg-4">
-                    <div class="d-grid">
-                        <form asp-controller="Admin" asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-outline-primary btn-lg py-3 w-100" style="border-color: #bbdefb; color: #1565c0;">
-                                <i class="fas fa-sign-out-alt me-2" style="color: #d32f2f;"></i>Logout
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Note -->
-            <div class="text-center mt-5">
-                <p class="text-muted small">
-                    <i class="fas fa-shield-alt text-primary me-1"></i>
-                    Secure Admin Panel • Last login: @DateTime.Now.ToString("MMM dd, yyyy 'at' hh:mm tt")
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
- *@
-
-
-@* @{
-    ViewData["Title"] = "Admin Dashboard";
-}
-
-<div class="container-fluid py-4">
-    <div class="row">
-        <!-- Sidebar Navigation -->
-        <div class="col-md-3 col-lg-2">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white py-3">
-                    <h5 class="mb-0">
-                        <i class="fas fa-user-shield me-2"></i>Admin Menu
-                    </h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        <!-- Event Management Button -->
-                        <button type="button" 
-                                class="list-group-item list-group-item-action admin-nav-btn active" 
-                                data-target="event-management"
-                                style="border-left: 4px solid #1976d2;">
-                            <i class="fas fa-calendar-day me-2" style="color: #1976d2;"></i>
-                            Event Management
-                        </button>
-
-                        <!-- User Management Button -->
-                        <button type="button" 
-                                class="list-group-item list-group-item-action admin-nav-btn" 
-                                data-target="user-management"
-                                style="border-left: 4px solid #7b1fa2;">
-                            <i class="fas fa-user-cog me-2" style="color: #7b1fa2;"></i>
-                            User Management
-                        </button>
-
-                        <!-- Comment Management Button -->
-                        <button type="button" 
-                                class="list-group-item list-group-item-action admin-nav-btn" 
-                                data-target="comment-management"
-                                style="border-left: 4px solid #f57c00;">
-                            <i class="fas fa-comments me-2" style="color: #f57c00;"></i>
-                            Comment Management
-                        </button>
-
-                        <!-- Tag Management Button -->
-                        <button type="button" 
-                                class="list-group-item list-group-item-action admin-nav-btn" 
-                                data-target="tag-management"
-                                style="border-left: 4px solid #388e3c;">
-                            <i class="fas fa-tags me-2" style="color: #388e3c;"></i>
-                            Tag Management
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Logout Button -->
-            <div class="mt-3">
-                <form asp-controller="Admin" asp-action="Logout" method="post">
-                    <button type="submit" class="btn btn-outline-danger w-100 py-2">
-                        <i class="fas fa-sign-out-alt me-2"></i>Logout
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Main Content Area -->
-        <div class="col-md-9 col-lg-10">
-            <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2 class="h3 mb-1 text-primary" id="content-title">
-                        <i class="fas fa-calendar-day me-2"></i>Event Management
-                    </h2>
-                    <p class="text-muted mb-0" id="content-subtitle">Manage events, schedules, and activities</p>
-                </div>
-                <div class="text-muted small">
-                    <i class="fas fa-shield-alt text-primary me-1"></i>
-                    Last login: @DateTime.Now.ToString("MMM dd, yyyy 'at' hh:mm tt")
-                </div>
-            </div>
-
-            <!-- Dynamic Content Sections -->
-            
-            <!-- Event Management Content -->
-            <div id="event-management" class="content-section">
-                <div class="row g-3">
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Event" asp-action="Create" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-plus-circle me-2 fs-5"></i>
-                            <span>Add Event</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Event" asp-action="Delete" class="btn btn-danger w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-trash me-2 fs-5"></i>
-                            <span>Delete Event</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Event" asp-action="Edit" class="btn btn-warning w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-edit me-2 fs-5"></i>
-                            <span>Update Event</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Event" asp-action="Index" class="btn btn-info w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-list me-2 fs-5"></i>
-                            <span>All Events</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- User Management Content -->
-            <div id="user-management" class="content-section d-none">
-                <div class="row g-3">
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Create" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-user-plus me-2 fs-5"></i>
-                            <span>Add User</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Delete" class="btn btn-danger w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-user-times me-2 fs-5"></i>
-                            <span>Delete User</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Edit" class="btn btn-warning w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-user-edit me-2 fs-5"></i>
-                            <span>Update User</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="User" asp-action="Index" class="btn btn-info w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-users me-2 fs-5"></i>
-                            <span>All Users</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Comment Management Content -->
-            <div id="comment-management" class="content-section d-none">
-                <div class="row g-3">
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Comment" asp-action="Create" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-comment-medical me-2 fs-5"></i>
-                            <span>Add Comment</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Comment" asp-action="Delete" class="btn btn-danger w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-comment-slash me-2 fs-5"></i>
-                            <span>Delete Comment</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Comment" asp-action="Edit" class="btn btn-warning w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-comment-edit me-2 fs-5"></i>
-                            <span>Update Comment</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Comment" asp-action="Index" class="btn btn-info w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-comments me-2 fs-5"></i>
-                            <span>All Comments</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tag Management Content -->
-            <div id="tag-management" class="content-section d-none">
-                <div class="row g-3">
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Tag" asp-action="Create" class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-tag me-2 fs-5"></i>
-                            <span>Add Tag</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Tag" asp-action="Delete" class="btn btn-danger w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-tag me-2 fs-5"></i>
-                            <span>Delete Tag</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Tag" asp-action="Edit" class="btn btn-warning w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-tag me-2 fs-5"></i>
-                            <span>Update Tag</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <a asp-controller="Tag" asp-action="Index" class="btn btn-info w-100 py-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-tags me-2 fs-5"></i>
-                            <span>All Tags</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navigation buttons
-            const navButtons = document.querySelectorAll('.admin-nav-btn');
-            const contentSections = document.querySelectorAll('.content-section');
-            const contentTitle = document.getElementById('content-title');
-            const contentSubtitle = document.getElementById('content-subtitle');
-
-            // Content titles and subtitles for each section
-            const sectionData = {
-                'event-management': {
-                    title: '<i class="fas fa-calendar-day me-2"></i>Event Management',
-                    subtitle: 'Manage events, schedules, and activities'
-                },
-                'user-management': {
-                    title: '<i class="fas fa-user-cog me-2"></i>User Management',
-                    subtitle: 'Manage user accounts and permissions'
-                },
-                'comment-management': {
-                    title: '<i class="fas fa-comments me-2"></i>Comment Management',
-                    subtitle: 'Moderate and manage user comments'
-                },
-                'tag-management': {
-                    title: '<i class="fas fa-tags me-2"></i>Tag Management',
-                    subtitle: 'Organize and manage content tags'
-                }
-            };
-
-            // Add click event listeners to navigation buttons
-            navButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const target = this.getAttribute('data-target');
-                    
-                    // Update active state
-                    navButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.classList.remove('fw-bold');
-                    });
-                    this.classList.add('active');
-                    this.classList.add('fw-bold');
-
-                    // Show/hide content sections
-                    contentSections.forEach(section => {
-                        section.classList.add('d-none');
-                    });
-                    document.getElementById(target).classList.remove('d-none');
-
-                    // Update content title and subtitle
-                    if (sectionData[target]) {
-                        contentTitle.innerHTML = sectionData[target].title;
-                        contentSubtitle.textContent = sectionData[target].subtitle;
-                    }
-                });
-            });
-        });
-    </script>
-}
-
-<style>
-    .admin-nav-btn {
-        border: none;
-        border-radius: 0;
-        padding: 1rem 1.25rem;
-        transition: all 0.3s ease;
-    }
-
-    .admin-nav-btn:hover {
-        background-color: #f8f9fa;
-        transform: translateX(5px);
-    }
-
-    .admin-nav-btn.active {
-        background-color: #e3f2fd;
-        font-weight: bold;
-    }
-
-    .content-section {
-        animation: fadeIn 0.5s ease-in;
-    }
-
-    @@keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn {
-        transition: all 0.3s ease;
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-</style> *@

@@ -12,8 +12,9 @@ namespace chas_happenings.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index() // Display the Admin page
+        public IActionResult Index(string? section) // Display the Admin page
         {
+            ViewBag.Section = section;
             return View();
         }
 

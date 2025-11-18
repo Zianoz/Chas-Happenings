@@ -21,6 +21,8 @@ namespace Application.Interfaces.IServices
         //extra user operations
         Task<GetUserAllDataDTO?> GetUserAllDataAsync(int userId);// includes events created, comments, attending, interested
         Task<GetUserCommentsDTO?> GetUserCommentsAsync(int userId);
+        Task<GetUserByIdDTO?> GetUserByUsernameAsync(string username);
+        Task<IEnumerable<User>> SearchUserAsync(string query);
 
         // for admin
         Task<List<GetUserByIdDTO?>> GetAllUsers();//Jing

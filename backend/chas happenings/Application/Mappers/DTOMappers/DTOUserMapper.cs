@@ -38,7 +38,11 @@ namespace Application.Mappers.DTOMappers
                 FirstName = userDTO.FirstName,
                 LastName = userDTO.LastName,
                 Email = userDTO.Email,
-                Role = UserRoles.Student
+                Phone = userDTO.Phone,
+                Course = userDTO.Course,
+                Role = userDTO.Role,
+                ProfilePictureUrl = userDTO.ProfilePictureUrl,
+                UserDescription = userDTO.UserDescription
             };
         }
 
@@ -46,11 +50,15 @@ namespace Application.Mappers.DTOMappers
         //So in this context, if the user did send a new field value replace it. Else do not change it.
         public static User UpdateUserByDTOMapper(User user, UpdateUserDTO updateUserDTO)
         {
+            user.Username = updateUserDTO.Username ?? user.Username;
             user.FirstName = updateUserDTO.FirstName ?? user.FirstName;
             user.LastName = updateUserDTO.LastName ?? user.LastName;
+            user.Email = updateUserDTO.Email ?? user.Email;
             user.Phone = updateUserDTO.Phone ?? user.Phone;
             user.ProfilePictureUrl = updateUserDTO.ProfilePictureUrl ?? user.ProfilePictureUrl;
             user.UserDescription = updateUserDTO.UserDescription ?? user.UserDescription;
+            user.Course = updateUserDTO.Course ?? user.Course;
+            user.Role = updateUserDTO.Role != 0 ? updateUserDTO.Role : user.Role;
             return user;
         }
 
