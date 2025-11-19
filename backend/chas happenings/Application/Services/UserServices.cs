@@ -2,6 +2,7 @@
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Application.Mappers.DTOMappers;
+using Domain.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
