@@ -5,20 +5,13 @@ const api = axios.create({
   baseURL: 'https://localhost:7291/api', // Your backend API base URL
   timeout: 10000, // Request timeout in milliseconds (10 seconds)
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'},
+  withCredentials: true,
 });
 
 // Request interceptor - runs before every request is sent
 api.interceptors.request.use(
   (config) => {
-    // Get token from localStorage
-    const token = localStorage.getItem('authToken');
-    
-    // If token exists, add it to the Authorization header
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     
     console.log('Request:', config.method.toUpperCase(), config.url);
     return config;

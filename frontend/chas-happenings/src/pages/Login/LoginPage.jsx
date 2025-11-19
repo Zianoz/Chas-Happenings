@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { userAPI } from "../../api/services";
+import api from "../../api/axios";
 import "./LoginPage.css";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,21 +18,19 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      // Using the userAPI service
-      const token = await userAPI.login(email, password);
+      const response = await userAPI.login(email, password);
 
-      // Store the token
-      localStorage.setItem("authToken", token);
+      const authenticationResponse = await api.get("/User/Authenticate", {
+        withCredentials: true,
+      });
 
-      console.log("Login successful, token:", token);
-
-      // Redirect or update app state here
-      // For example: navigate("/home") or window.location.href = "/home"
+      if (authenticationResponse.data.role === "Admin") {
+        window.location.href = "https://localhost:7291/Admin";
+      } else {
+        navigate("/");
+      }
     } catch (err) {
-      setError(
-        err.response?.data || err.message || "An error occurred during login"
-      );
-      console.error("Login error:", err);
+      setError(err.response?.data || err.message);
     } finally {
       setLoading(false);
     }
@@ -42,7 +44,7 @@ function LoginPage() {
 
         <form onSubmit={handleSubmit} className="login-form">
           {error && <div className="error-message">{error}</div>}
-          
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input

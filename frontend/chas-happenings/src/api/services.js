@@ -14,6 +14,13 @@ export const userAPI = {
     return response.data; // Returns the token
   },
 
+  authenticate: async () => {
+    const response = await api.get('/User/Authenticate', {
+      withCredentials: true,
+    });
+    return response.data;
+  },
+
   // Create new user
   createUser: async (userData) => {
     const response = await api.post('/User', userData);
