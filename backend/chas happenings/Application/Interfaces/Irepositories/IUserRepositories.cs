@@ -20,5 +20,9 @@ namespace Application.Interfaces.Irepositories
         // Admin Endpoints 
         Task<List<User?>> GetAllUsersRepoAsync();
 
+        // Extra User Operations
+        Task<IEnumerable<User>> SearchUserRepoAsync(string query);
+        Task<User?> GetUserByUsernameRepoAsync(string username);
+
     }
 }
