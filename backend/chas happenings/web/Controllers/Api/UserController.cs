@@ -1,10 +1,9 @@
 ﻿using Application.DTOs.UserDTOs;
 using Application.Interfaces.IServices;
-using Application.Services;
-using Domain.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace chas_happenings.Controllers.Api
 {
@@ -13,19 +12,31 @@ namespace chas_happenings.Controllers.Api
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IJwtService _jwtService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IJwtService jwtService)
         {
             _userService = userService;
+            _jwtService = jwtService;
         }
 
         [HttpPost("LoginUser")]
-        public async Task<ActionResult<string>> LoginUserAsync(LoginUserDTO dto)
+        public async Task<ActionResult> LoginUserAsync(LoginUserDTO dto)
         {
             try
             {
                 var token = await _userService.LoginUserServiceAsync(dto);
-                return Ok(new { Token = token });
+                
+                // Set HTTP-only cookie for security
+                Response.Cookies.Append("authToken", token, new CookieOptions
+                {
+                    HttpOnly = true,  // Prevents JavaScript access (XSS protection)
+                    Secure = true,    // Only sent over HTTPS
+                    SameSite = SameSiteMode.Lax, // Works for same-site (localhost to localhost)
+                    Expires = DateTimeOffset.UtcNow.AddDays(7) // Token expiry
+                });
+                
+                return Ok(new { Token = token, Message = "Login successful" });
             }
             catch (InvalidCredentialException ex)
             {
@@ -38,12 +49,31 @@ namespace chas_happenings.Controllers.Api
             }
         }
 
-        [HttpPost("CreateUser")]
-        // GET: /api/User/test (for browser testing)
-        [HttpGet("test")]
-        public IActionResult Test()
+        [Authorize]
+        [HttpGet("Authenticate")] //Endpoint to (deconstruct) the token for frontend validation
+        public async Task<ActionResult> Authenticate()
         {
-            return Ok("API is running correctly!");
+            var identity = HttpContext.User;
+
+            var role = identity.FindFirst(ClaimTypes.Role)?.Value;
+            var email = identity.FindFirst(ClaimTypes.Email)?.Value;
+            var id = identity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return Ok(new { id, email, role });
+        }
+
+        [HttpPost("Logout")]
+        public async Task<ActionResult> Logout()
+        {
+            // Delete the JWT token cookie
+            Response.Cookies.Delete("authToken", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Lax
+            });
+            
+            return Ok(new { message = "Logged out successfully" });
         }
 
         [HttpPost]
@@ -69,7 +99,7 @@ namespace chas_happenings.Controllers.Api
         }
 
         [HttpGet("GetUserById/{userId}")]
-        public async Task<ActionResult<User>> GetUserById(int userId)
+        public async Task<ActionResult> GetUserById(int userId)
         {
             var user = await _userService.GetUserByIdServicesAsync(userId);
             if (user == null)
@@ -80,6 +110,7 @@ namespace chas_happenings.Controllers.Api
         }
 
         [HttpDelete("Delete/{userId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteUserById(int userId)
         {
             var result = await _userService.DeleteUserByIdServicesAsync(userId);
@@ -91,7 +122,8 @@ namespace chas_happenings.Controllers.Api
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<User>>> GetAllUsers()
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> GetAllUsers()
         {
             var userList = await _userService.GetAllUsers();
             return Ok(userList);
