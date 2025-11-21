@@ -31,17 +31,15 @@ namespace Infrastructure.Data
         // Sedding table below
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var UserModel = modelBuilder.Entity<User>();
-            var EventModel = modelBuilder.Entity<Event>();
-            var ArticleModel = modelBuilder.Entity<Article>();
-            var TagModel = modelBuilder.Entity<Tag>();
-            var CommentModel = modelBuilder.Entity<Comment>();
-            var NotificationModel = modelBuilder.Entity<Notification>();
-            var UserEventModel = modelBuilder.Entity<UserEvent>();
+            var userModel = modelBuilder.Entity<User>();
+            var eventModel = modelBuilder.Entity<Event>();
+            var articleModel = modelBuilder.Entity<Article>();
+            var tagModel = modelBuilder.Entity<Tag>();
+            var commentModel = modelBuilder.Entity<Comment>();
+            var notificationModel = modelBuilder.Entity<Notification>();
+            var userEventModel = modelBuilder.Entity<UserEvent>();
 
-            // Seed admin user with hardcoded password hash for "123"
-            // This hash is static to avoid EF Core pending model changes warning
-            UserModel.HasData(new User
+            userModel.HasData(new User
             {
                 Id = 1,
                 Username = "admin",
@@ -55,6 +53,57 @@ namespace Infrastructure.Data
                 UserDescription = "System Administrator",
                 PasswordHash = "AQAAAAIAAYagAAAAEOF5qkGEC7KpKy9xlZYKZYWgOQUQlKqMDKh/ludIwt3VY2haVwXqL0HU9C1IiO9eAg=="
             });
+
+            userModel.HasData(new User
+            {
+                Id = 2,
+                Username = "max",
+                FirstName = "Maximillian",
+                LastName = "Lundberg",
+                Email = "max@example.com",
+                Phone = null,
+                PasswordHash = "demo-hash",
+                Course = "Fullstack .NET",
+                Role = UserRoles.Student,
+                ProfilePictureUrl = null,
+                UserDescription = "Test seeded user"
+            });
+
+            eventModel.HasData(new Event
+            {
+                Id = 1,
+                Title = "Chas Intro Day",
+                Description = "Introduction event for Chas Happenings.",
+                Presentation = null,
+                Text1 = null,
+                Text2 = null,
+                EventCreated = new DateTime(2024, 11, 1, 9, 0, 0, DateTimeKind.Utc),
+                EventDate = new DateTime(2024, 11, 15),
+                StartTime = new TimeSpan(10, 0, 0),
+                EndTime = new TimeSpan(12, 0, 0),
+                Location = "Chas Academy, Stockholm",
+                Type = EventType.StudentBodey   
+            });
+
+
+            tagModel.HasData(new Tag
+            {
+                Id = 1,
+                TagName = "Workshop",
+                FK_event = 1 
+            });
+
+            commentModel.HasData(new Comment
+            {
+                Id = 1,
+                AuthorId = 1,
+                EventId = 1,
+                Text = "Looking forward to this event!",
+                ProfilePicture = "/images/default-profile.png",
+                CreatedAt = new DateTime(2024, 11, 2, 8, 30, 0, DateTimeKind.Utc)
+            });
+
+
         }
     }
 }

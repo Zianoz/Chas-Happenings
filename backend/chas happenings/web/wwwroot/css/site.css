@@ -280,3 +280,109 @@ body {
 .bg-light.bg-opacity-25 {
     background-color: rgba(227, 242, 253, 0.7) !important;
 }
+
+/* ------ Max egna CSS under ------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* MAIN GRID: 3 ELEMENTS -> side1 | middle-container | side2 */
+#layout {
+  display: grid;
+  grid-template-columns: 10vw 1fr 10vw; /* side1 & side2 ~10vw each */
+  min-height: 100vh;
+  column-gap: 0; /* no space between the three main columns */
+}
+
+/* ALL MAIN GRID ELEMENTS: BLACK BORDER, NO RADIUS */
+#side1,
+#middle-container,
+#side2 {
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+/* SIDE PANELS: MARINE BLUE BACKGROUND */
+#side1,
+#side2 {
+  background-color: #003366; /* marine blue */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MIDDLE CONTAINER: INNER GRID WITH 3 SECTIONS */
+#middle-container {
+  background-color: #ffffff;       /* regular background */
+  display: grid;
+  grid-template-columns: 4fr 1fr;  /* ~80% / ~20% width */
+  grid-template-rows: auto auto;   /* top row: calendar+dynamic, bottom: article */
+  gap: 2vh 2vw;                    /* 2 vh & 2 vw distance between elements */
+  padding: 2vh 2vw;
+}
+
+/* INNER CONTAINERS: BORDERS, NO RADIUS */
+#calendar,
+#dynamic-info,
+#article {
+  border: 2px solid #000;
+  border-radius: 0;
+  padding: 0.5rem;
+}
+
+/* POSITIONING INSIDE MIDDLE-CONTAINER GRID */
+#calendar {
+  grid-column: 1 / 2; /* top-left */
+  grid-row: 1 / 2;
+}
+
+#dynamic-info {
+  grid-column: 2 / 3; /* top-right */
+  grid-row: 1 / 2;
+}
+
+#article {
+  grid-column: 1 / 3; /* spans both columns below */
+  grid-row: 2 / 3;
+}
+
+/* CALENDAR LAYOUT */
+#calendar h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Grid for the actual calendar cells */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 days (Sun–Sat) */
+  grid-auto-rows: 60px;
+}
+
+/* EACH CALENDAR CELL: 2PX BLACK BORDER, NO RADIUS */
+.calendar-cell {
+  border: 2px solid #000;
+  border-radius: 0;
+  font-size: 0.8rem;
+  padding: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Header row for weekday names */
+.calendar-cell.header {
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
