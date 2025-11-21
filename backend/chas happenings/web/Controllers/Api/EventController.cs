@@ -41,7 +41,7 @@ namespace chas_happenings.Controllers.Api
         [HttpGet("getbyid/{eventId}")]
         public async Task<ActionResult<GetEventCalenderDisplayDTO>> GetByIdDisplayData(int eventId)
         {
-            var eventData = _EventServices.GetEventByIdDisplayDataServicesAsync(eventId);
+            var eventData = await _EventServices.GetEventByIdDisplayDataServicesAsync(eventId);
 
             return Ok(eventData);
         }
