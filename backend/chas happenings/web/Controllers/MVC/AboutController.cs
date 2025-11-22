@@ -8,7 +8,7 @@ namespace chas_happenings.Controllers.MVC
 
         public IActionResult About()
         {
-            SeoConfig.Set(ViewBag, new SeoMeta
+            SeoConfig.Set(ViewBag, new SeoMeta  //this is the default SEO metadata for this page, no need to change
             {
                 Title = "About Us - My Website",
                 Description = "Learn more about our team and mission.",
