@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/chas_happenings.styles.css" asp-append-version="true" />
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9R5Q1F9GZ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -20,8 +20,23 @@
         gtag('js', new Date());
         gtag('config', 'G-Z9R5Q1F9GZ');
     </script>
+    <!-- SEO metadata tag -->
+    @{
+        var meta = chas_happenings.Models.Seo.SeoConfig.GetMerged(ViewBag);
+    }
+    <title>@meta.Title</title>
+    <meta name="description" content="@meta.Description" />
+    <meta name="keywords" content="@meta.Keywords" />
+
+    <link rel="canonical" href="@meta.CanonicalUrl" />
+
+    <meta property="og:title" content="@meta.OgTitle" />
+    <meta property="og:description" content="@meta.OgDescription" />
+    <meta property="og:image" content="@meta.OgImage" />
+    <meta property="og:type" content="@meta.OgType" />
 
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -39,6 +54,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Home" asp-action="Index">News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light hover-gold" asp-area="" asp-controller="About" asp-action="About">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
