@@ -1,194 +1,166 @@
 # Chas-Happenings
 
-An all-in-one event & activity calendar for students and faculty at Chas Academy.
-Stay updated with workshops, guest lectures, community events, and campus activities—all in one place.
+## Description
 
-📘 Overview
+**Chas-Happenings** is an all-in-one event platform for Chas Academy, offering a unified calendar for students and faculty along with a simple admin dashboard. The app also uses AI to generate weekly news updates, built on Clean Architecture for long-term reliability.
 
-Chas-Happenings is designed using Clean Architecture to ensure scalability, testability, and clean separation of concerns.
+## Funktioner
 
-Architecture Layers:
+MVP:
 
-Application – Core logic, services, use cases
+- all-in-one
+- AI-generated weekly news
+- Userful admin dashboard with event/user/comment/tag management, ability to log in, publish events, add and remove users etc.
+- Upcoming feature proposals include event filter, upload a profile picture so users can personalize their account and weekly and upcoming events automated sending by email.
 
-Domain – Business rules and entities
+## Team
 
-Infrastructure – Data access, repositories, migrations
+- Max        - [samihoy]([https://github.com/samihoy]
+- Zian       - [Zianoz](https://github.com/Zianoz)
+- Jing Zhang - [lucine1029](https://github.com/lucine1029)
 
-Web – Presentation layer (MVC + API controllers)
+## Architecture Layer
 
-Tests – Unit test coverage for controllers and services
+- Application – Core logic, services, use cases
+- Domain – Business rules and entities
+- Infrastructure – Data access, repositories, migrations
+- Web – Presentation layer (MVC + API controllers)
+- Tests – Unit test coverage for controllers and services
 
-⚙️ Setup Instructions
-Prerequisites
+## Setup Instructions
 
-.NET 8 SDK
+### Prerequisites
 
-SQL Server or LocalDB
+- .NET 8 SDK
+- MSSQL LocalDB
+- Visual Studio / VS Code
 
-Visual Studio / VS Code
+### Clone the Repository
 
-EF Core CLI (included with .NET SDK)
-
-1️⃣ Clone the Repository
 git clone https://github.com/Zianoz/Chas-Happenings.git
+
 cd Chas-Happenings
 
-2️⃣ Configure the Database
+### Configure the Database
 
-Update your connection string in
-Infrastructure/appsettings.json or Web/appsettings.json:
+- Update your connection string in Web/appsettings.json:
 
 "ConnectionStrings": {
-  "DefaultConnection": "Server=.;Database=ChasHappeningsDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=ChasHappeningsDb;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 
-3️⃣ Apply EF Core Migrations
-cd Infrastructure
-dotnet ef database update
+### Apply EF Core Migrations
 
-4️⃣ Run the Application
+Go to: Tools → NuGet Package Manager → Package Manager Console
 
-From the root or Web project:
+- add migration init
+- update database
 
-dotnet run
+### Run the Application
 
+From the Web project: run Program.cs
 
-App will launch at:
+### App will launch at:
 
 https://localhost:7291
 http://localhost:5173
 
-🗂️ Folder Structure
-Chas-Happenings/
-│
-├── Application/
-│   ├── DTOs/
-│   ├── Interfaces/
-│   ├── Mappers/
-│   ├── Services/
-│   └── Utilities/
-│
-├── chas_happenings.Tests/
-│   ├── Controllers/
-│   └── Services/
-│
-├── Domain/
-│   ├── Models/
-│   └── Enums/
-│
-├── Infrastructure/
-│   ├── Data/
-│   ├── Migrations/
-│   ├── Repositories/
-│   └── Services/
-│
-└── Web/
-    ├── Controllers/
-    │   ├── Api/
-    │   └── MVC/
-    ├── Models/
-    ├── Pages/
-    ├── Views/
-    └── Program.cs
+# API Endpoints (User Management)
 
-📡 The example API Endpoints 
+## Login User
 
-👤 User Management
-Login User
+- Method: POST
 
-Method: POST
+- Route: /api/User/LoginUser
 
-Route: /api/User/LoginUser
+- Description: Authenticates a user and returns a JWT token stored in an HTTP-only cookie
 
-Description: Authenticates a user and returns a JWT token stored in an HTTP-only cookie
+- Request Body: LoginUserDTO
 
-Request Body: LoginUserDTO
+- Response: JWT token + success message or authentication error
 
-Response: JWT token + success message or authentication error
+## Authenticate User
 
-Authenticate User
+- Method: GET
 
-Method: GET
+- Route: /api/User/Authenticate
 
-Route: /api/User/Authenticate
+- Description: Validates JWT token and returns user claims
 
-Description: Validates JWT token and returns user claims
+- Headers: Authorization: Bearer {token}
 
-Headers: Authorization: Bearer {token}
+- Response: User ID, email, role
 
-Response: User ID, email, role
+## Logout User
 
-Logout User
+- Method: POST
 
-Method: POST
+- Route: /api/User/Logout
 
-Route: /api/User/Logout
+- Description: Clears authentication cookie and logs the user out
 
-Description: Clears authentication cookie and logs the user out
+- Response: Success message
 
-Response: Success message
+## Create New User
 
-Create New User
+- Method: POST
 
-Method: POST
+- Route: /api/User
 
-Route: /api/User
+- Description: Registers a new user
 
-Description: Registers a new user
+- Request Body: CreateUserDTO
 
-Request Body: CreateUserDTO
+- Response: Created user ID or error message
 
-Response: Created user ID or error message
+## Update User
 
-Update User
+- Method: PUT
 
-Method: PUT
+- Route: /api/User/UpdateUserById/{userId}
 
-Route: /api/User/UpdateUserById/{userId}
+- Description: Updates a user’s details
 
-Description: Updates a user’s details
+- URL Parameter: int userId
 
-URL Parameter: int userId
+- Request Body: UpdateUserDTO
 
-Request Body: UpdateUserDTO
+- Response: Success message or "User not found"
 
-Response: Success message or "User not found"
+## Get User by ID
 
-Get User by ID
+- Method: GET
 
-Method: GET
+- Route: /api/User/GetUserById/{userId}
 
-Route: /api/User/GetUserById/{userId}
+- Description: Retrieves a single user by ID
 
-Description: Retrieves a single user by ID
+- URL Parameter: int userId
 
-URL Parameter: int userId
+- Response: User details or "User not found"
 
-Response: User details or "User not found"
+## Delete User
 
-Delete User
+- Method: DELETE
 
-Method: DELETE
+- Route: /api/User/Delete/{userId}
 
-Route: /api/User/Delete/{userId}
+- Description: Deletes a user (Admin only)
 
-Description: Deletes a user (Admin only)
+- Authorization: Admin role required
 
-Authorization: Admin role required
+- URL Parameter: int userId
 
-URL Parameter: int userId
+- Response: Success message or "User not found"
 
-Response: Success message or "User not found"
+## Get All Users
 
-Get All Users
+- Method: GET
 
-Method: GET
+- Route: /api/User/GetAll
 
-Route: /api/User/GetAll
+- Description: Retrieves all users (Admin only)
 
-Description: Retrieves all users (Admin only)
+- Authorization: Admin role required
 
-Authorization: Admin role required
-
-Response: List of users
+- Response: List of users
