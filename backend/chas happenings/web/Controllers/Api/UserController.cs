@@ -32,7 +32,7 @@ namespace chas_happenings.Controllers.Api
                 {
                     HttpOnly = true,  // Prevents JavaScript access (XSS protection)
                     Secure = true,    // Only sent over HTTPS
-                    SameSite = SameSiteMode.Lax, // Works for same-site (localhost to localhost)
+                    SameSite = SameSiteMode.None, // Works for same-site (localhost to localhost)
                     Expires = DateTimeOffset.UtcNow.AddDays(7) // Token expiry
                 });
                 
