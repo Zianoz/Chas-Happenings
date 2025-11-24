@@ -32,11 +32,12 @@ namespace Application.Services
         public async Task<OpenAIResponseDTO> GenerateAnswerAsync(OpenAIRequestDTO request)
         {
             var chatClient = _client.GetChatClient(_deployment);
-            
+
             var response = await chatClient.CompleteChatAsync(
                 new ChatMessage[]
                 {
-                    new UserChatMessage(request.Prompt)
+                    new SystemChatMessage("You are a friendly, concise chatbot who explains and summarizes stuff to university students."), //System prompt
+                    new UserChatMessage(request.Prompt) //User prompt
                 }
             );
 
