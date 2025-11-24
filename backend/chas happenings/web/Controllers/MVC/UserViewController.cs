@@ -61,7 +61,7 @@ namespace chas_happenings.Controllers.MVC
         {
             if (!id.HasValue && string.IsNullOrEmpty(username))
             {
-                TempData["ErrorMessage"] = "Please enter a user id or username.";
+                TempData["ErrorMessageWithNotEnter"] = "Please enter a user id or username.";
                 return RedirectToAction("SelectUserToDelete");
             }
 
@@ -71,7 +71,7 @@ namespace chas_happenings.Controllers.MVC
 
             if (user == null)
             {
-                TempData["ErrorMessage"] = "User not found.";
+                TempData["ErrorMessageWithWrongEnter"] = "User not found.";
                 return RedirectToAction("SelectUserToDelete");
             }
 
@@ -129,7 +129,7 @@ namespace chas_happenings.Controllers.MVC
         {
             if (!id.HasValue && string.IsNullOrEmpty(username))
             {
-                TempData["ErrorMessage"] = "Please enter a user id or username.";
+                TempData["ErrorMessageWithNotEnter"] = "Please enter a user id or username.";
                 return RedirectToAction("SelectUserToEdit");
             }
 
@@ -139,7 +139,7 @@ namespace chas_happenings.Controllers.MVC
 
             if (user == null)
             {
-                TempData["ErrorMessage"] = "User not found.";
+                TempData["ErrorMessageWithWrongEnter"] = "User not found.";
                 return RedirectToAction("SelectUserToEdit");
             }
 
