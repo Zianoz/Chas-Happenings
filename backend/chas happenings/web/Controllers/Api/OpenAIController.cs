@@ -17,7 +17,7 @@ namespace chas_happenings.Controllers.Api
         }
 
         [HttpPost("generate")]
-        public async Task<ActionResult<OpenAIResponseDTO>> GenerateAnswer([FromBody] OpenAIRequestDTO request)
+        public async Task<ActionResult<OpenAIResponseDTO>> GenerateAnswer(OpenAIRequestDTO request)
         {
             try
             {
@@ -36,10 +36,5 @@ namespace chas_happenings.Controllers.Api
             }
         }
 
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok("OpenAI API is running correctly!");
-        }
     }
 }

@@ -19,17 +19,19 @@ namespace Application.Services
             _tagRepo = tagRepo;
         }
 
-
         public async Task<int> AddTagServiceAsync(CreateTagDTO tagDTO)
         {
             var tag = DTOTagMapper.CreateTagModelFromDTOs(tagDTO);
             var newTag = await _tagRepo.AddTagRepoAsync(tag);
-            if (newTag != null)
+
+            if (newTag == null)
             {
-                return newTag.Id;
+                throw new InvalidOperationException("Failed to add tag to database, newTag is null");
             }
-            throw new InvalidOperationException($"Failed to add tag to database, Tag id was {newTag.Id}");
+
+            return newTag.Id;
         }
+
 
         public async Task<int> DeleteTagByIdServiceAsync(int TagId)
         {

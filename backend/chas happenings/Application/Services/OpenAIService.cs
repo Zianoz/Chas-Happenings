@@ -36,39 +36,11 @@ namespace Application.Services
         {
             var chatClient = _client.GetChatClient(_deployment);
 
-            // Get events data for context
-            var today = DateTime.UtcNow;
-            var nextWeek = today.AddDays(7);
-            var lastWeek = today.AddDays(-7);
-            var nextMonth = today.AddDays(30);
-            
-            // Fetch upcoming and past events
-            var upcomingEvents = await _eventServices.GetEventsByDateTimeServicesAsync(today, nextWeek);
-            var pastEvents = await _eventServices.GetEventsByDateTimeServicesAsync(lastWeek, today);
-            var allUpcomingEvents = await _eventServices.GetEventsByDateTimeServicesAsync(today, nextMonth);
-
-            // Build event context
-            var eventContext = BuildEventContext(upcomingEvents, pastEvents, allUpcomingEvents);
-
-            // System prompt for event-focused AI
-            var systemPrompt = @"You are an AI assistant specialized in summarizing and providing information about events at Chas Academy (Chas Happenings). 
-Your primary role is to help users understand:
-- Upcoming events in the next week or month
-- Past events from the previous week
-- Event details like titles, dates, times, and types
-- Event summaries and recommendations
-
-Always be friendly, concise, and focus on event-related queries. If asked about non-event topics, politely redirect the conversation back to events.
-When listing events, format them in a clear, easy-to-read way with bullet points or numbered lists.
-
-Current Events Data:
-" + eventContext;
-            
             var response = await chatClient.CompleteChatAsync(
                 new ChatMessage[]
                 {
-                    new SystemChatMessage(systemPrompt),
-                    new UserChatMessage(request.Prompt)
+                    new SystemChatMessage("You are a friendly, concise chatbot who explains and summarizes stuff to university students."), //System prompt
+                    new UserChatMessage(request.Prompt) //User prompt
                 }
             );
 
