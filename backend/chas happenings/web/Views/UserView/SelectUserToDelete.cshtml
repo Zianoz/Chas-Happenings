@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Find User to Delete";
+}
+
+<h2>Find User to Delete</h2>
+
+@if (TempData["ErrorMessageWithNotEnter"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessageWithNotEnter"]</div>
+}
+@if (TempData["ErrorMessageWithWrongEnter"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessageWithWrongEnter"]</div>
+}
+
+<form asp-action="DeleteUser" method="get">
+    <div class="mb-3">
+        <label>User ID:</label>
+        <input type="number" name="id" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Username:</label>
+        <input type="text" name="username" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-danger">Find User</button>
+    <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -1,22 +1,628 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
+/* Navgation bar */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.nav-link.text-light:hover {
+    color: #ffc107 !important; /* Brighter yellow */
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+/* Book button styling - fitted oval */
+.book-button {
+    border: 2px solid #ffd700 !important;
+    border-radius: 50px !important;
+    padding: 0.4rem 1.2rem !important;
+    margin: 0 0.3rem !important;
+    background-color: transparent !important;
+    color: #ffd700 !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .book-button {
+        padding: 0.35rem 1rem !important;
+        margin: 0.2rem 0 !important;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ensure consistent nav item alignment */
+.navbar-nav.align-items-center .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Improved typography */
+.intro-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    line-height: 1.7;
+}
+
+.chef-highlight, .chef-card {
+    transition: transform 0.3s ease;
+}
+
+    .chef-highlight:hover, .chef-card:hover {
+        transform: translateY(-2px);
+    }
+
+/* Better text readability */
+.text-start p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* Responsive text */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1.1rem;
+    }
+}
+
+/* Seasonal dishes styling */
+.season-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.4rem 1rem !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.spring-badge {
+    background: rgba(40, 167, 69, 0.9);
+    color: white;
+}
+
+.summer-badge {
+    background: rgba(255, 193, 7, 0.9);
+    color: black;
+}
+
+.autumn-badge {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+}
+
+.winter-badge {
+    background: rgba(23, 162, 184, 0.9);
+    color: white;
+}
+
+.dish-card {
+    position: relative;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+    .dish-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .dish-card img {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .dish-card:hover img {
+        transform: scale(1.05);
+    }
+
+/* Ensure title has enough space */
+.card-title {
+    margin-bottom: 1rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* Calendar Theme Styles */
+.calendar-theme {
+    border: 2px solid #e9ecef;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+}
+
+.calendar-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(13, 110, 253, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(13, 110, 253, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.calendar-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    margin: -2rem -2rem 2rem -2rem;
+    padding: 2rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: white;
+}
+
+    .calendar-header h1,
+    .calendar-header .lead {
+        color: white !important;
+    }
+
+.calendar-date-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.calendar-feature {
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+    .calendar-feature:hover {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+        transform: translateY(-2px);
+    }
+
+.mini-calendar-preview {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-date {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+    .calendar-date:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .intro-card {
+        padding: 2rem !important;
+    }
+
+    .calendar-header {
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        padding: 1.5rem;
+    }
+
+    .calendar-date-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+.btn-primary:hover {
+    background-color: #bbdefb !important;
+    border-color: #90caf9 !important;
+    color: #0d47a1 !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #e3f2fd !important;
+    border-color: #64b5f6 !important;
+    color: #1565c0 !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Icon hover effects */
+.btn-primary:hover i {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+/* Header background with light blue */
+.bg-light.bg-opacity-25 {
+    background-color: rgba(227, 242, 253, 0.7) !important;
+}
+
+/* ------ Max egna CSS under ------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* MAIN GRID: 3 ELEMENTS -> side1 | middle-container | side2 */
+#layout {
+  display: grid;
+  grid-template-columns: 10vw 1fr 10vw; /* side1 & side2 ~10vw each */
+  min-height: 100vh;
+  column-gap: 0; /* no space between the three main columns */
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+}
+
+/* ALL MAIN GRID ELEMENTS: BLACK BORDER, NO RADIUS */
+#side1,
+#middle-container,
+#side2 {
+  border: none !important;
+  border-radius: 0;
+}
+
+/* SIDE PANELS: MARINE BLUE BACKGROUND */
+#side1,
+#side2 {
+  background: linear-gradient(180deg, #1976d2 0%, #1565c0 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* MIDDLE CONTAINER: INNER GRID WITH 3 SECTIONS */
+#middle-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: none !important;
+  border-radius: 0;
+  display: grid;
+  grid-template-columns: 4fr 1fr;  /* ~80% / ~20% width */
+  grid-template-rows: auto auto;   /* top row: calendar+dynamic, bottom: article */
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* SECTION CONTAINERS: NO BORDER, ROUNDED CORNERS, SHADOW */
+#calendar,
+#dynamic-info,
+#article {
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.15);
+}
+
+/* ------ Calendar Styling ------*/
+#calendar {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3);
+}
+
+#calendar h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Calendar Grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Calendar Cells */
+.calendar-cell {
+  background: white;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 0.9rem;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+  font-weight: 500;
+  color: #1565c0;
+}
+
+/* Empty cells */
+.calendar-cell:empty {
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* Header row for weekday names */
+.calendar-cell.header {
+  background: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  color: #1976d2;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: default;
+}
+
+/* Hover effect for date cells */
+.calendar-cell:not(.header):not(:empty):hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(33, 150, 243, 0.4);
+  background: linear-gradient(135deg, #42a5f5 0%, #2196f3 100%);
+  color: white;
+  font-weight: 600;
+}
+
+/* Today's date highlight (example: day 15) */
+.calendar-cell.today {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.5);
+}
+
+.calendar-cell.today:hover {
+  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+  transform: translateY(-4px) scale(1.08);
+}
+
+/* Weekend styling */
+.calendar-cell.weekend:not(.header):not(:empty) {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.calendar-cell.weekend:not(.header):not(:empty):hover {
+  background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+  color: white;
+  transform: translateY(-4px) scale(1.05);
+}
+
+/* Event indicator dot */
+.calendar-cell.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #1976d2;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.3);
+}
+
+.calendar-cell.has-event:hover::after {
+  background: white;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* ------ Dynamic Info Section ------*/
+#dynamic-info {
+  background: linear-gradient(135deg, #42a5f5 0%, #2196f3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.25);
+}
+
+/* ------ AI Chat Section (Blue Theme) ------*/
+#article {
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-chat-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 500px;
+}
+
+.ai-chat-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  margin: -1.5rem -1.5rem 0 -1.5rem;
+}
+
+.ai-chat-header h3 {
+  color: white;
+  margin: 0;
+  font-weight: 600;
+}
+
+.ai-chat-header small {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ai-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.ai-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 300px;
+  max-height: 400px;
+}
+
+.ai-chat-footer {
+  padding: 1rem;
+  background: #e3f2fd;
+  border-radius: 0 0 12px 12px;
+  margin: 0 -1.5rem -1.5rem -1.5rem;
+}
+
+.chat-message.bot .message-avatar {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+}
+
+.chat-message.user .message-avatar {
+  background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+}
+
+.chat-message.user .message-bubble {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  color: white;
+}
+
+.chat-send-btn {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+}
+
+.chat-send-btn:hover {
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.5);
+}
+
+.quick-btn {
+  border: 1px solid #2196f3;
+  color: #2196f3;
+}
+
+.quick-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.typing-indicator span {
+  background-color: #2196f3;
+}
+
+.chat-input-field:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.15);
+}
+
+/* Animations */
+@keyframes fadeInCalendar {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#calendar, #dynamic-info, #article {
+  animation: fadeInCalendar 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #layout {
+    grid-template-columns: 5vw 1fr 5vw;
+  }
+
+  #middle-container {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  #calendar, #dynamic-info, #article {
+    padding: 1rem !important;
+  }
+
+  #calendar h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .calendar-grid {
+    gap: 4px;
+    padding: 0.5rem;
+  }
+
+  .calendar-cell {
+    min-height: 40px;
+    padding: 8px;
+    font-size: 0.8rem;
+    border-radius: 8px !important;
+  }
+
+  .calendar-cell.header {
+    font-size: 0.65rem;
+  }
 }

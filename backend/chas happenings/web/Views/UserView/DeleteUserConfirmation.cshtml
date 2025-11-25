@@ -1,0 +1,24 @@
+﻿@model Application.DTOs.UserDTOs.UpdateUserDTO
+
+<h2>Delete User Confirmation</h2>
+
+<p>Are you sure you want to delete this user?</p>
+
+<ul>
+    <li><b>ID:</b> @Model.Id</li>
+    <li><b>Username:</b> @Model.Username</li>
+	<li><b>First Name:</b> @Model.FirstName</li>
+	<li><b>Last Name:</b> @Model.LastName</li>
+    <li><b>Email:</b> @Model.Email</li>
+	<li><b>Phone:</b> @Model.Phone</li>
+	<li><b>Course:</b> @Model.Course</li>
+	<li><b>Role:</b> @Model.Role</li>
+</ul>
+
+<form asp-action="DeleteUserConfirmed" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+
+    <a asp-action="SelectUserToDelete" class="btn btn-secondary">Cancel</a>
+</form>
