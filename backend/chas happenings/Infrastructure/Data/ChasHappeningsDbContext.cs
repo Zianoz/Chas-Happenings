@@ -84,6 +84,21 @@ namespace Infrastructure.Data
                 Location = "Chas Academy, Stockholm",
                 Type = EventType.StudentBodey   
             });
+            eventModel.HasData(new Event
+            {
+                Id = 10,
+                Title = "party",
+                Description = "hallowen",
+                Presentation = null,
+                Text1 = null,
+                Text2 = null,
+                EventCreated = new DateTime(2024, 11, 1, 9, 0, 0, DateTimeKind.Utc),
+                EventDate = new DateTime(2025, 7, 15),
+                StartTime = new TimeSpan(10, 0, 0),
+                EndTime = new TimeSpan(12, 0, 0),
+                Location = "Chas Academy, Stockholm",
+                Type = EventType.StudentBodey
+            });
 
 
             tagModel.HasData(new Tag
