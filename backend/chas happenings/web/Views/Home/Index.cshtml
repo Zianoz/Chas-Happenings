@@ -1,136 +1,9 @@
-﻿@* @{
-    ViewData["Title"] = "Home - Chas Happenings";
-}
-
-<!-- Welcome Section -->
-<section class="welcome-section py-5 bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="intro-card p-5 rounded shadow bg-white">
-                    <!-- Header Section -->
-                    <div class="text-center mb-5">
-                        <h1 class="display-4 mb-3 text-primary">
-                            <strong>Welcome to Chas Happenings</strong>
-                        </h1>
-                        <p class="lead text-muted">Your central hub for all events and activities at Chas Academy</p>
-                    </div>
-
-                    <!-- Main Content -->
-                    <div class="text-center">
-                        <p class="fs-5 mb-4">
-                            At Chas Academy, we believe that learning extends beyond the classroom. Our event calendar
-                            brings together students, faculty, and the community through workshops, guest lectures,
-                            social events, and career opportunities.
-                        </p>
-
-                        <!-- Features -->
-                        <div class="row mb-4">
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-start">
-                                    <div class="flex-shrink-0">
-                                        <i class="fas fa-calendar-check fa-2x text-primary"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-primary">Event Calendar</h5>
-                                        <p class="mb-0">Stay updated with all upcoming events, deadlines, and activities across campus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-start">
-                                    <div class="flex-shrink-0">
-                                        <i class="fas fa-users fa-2x text-primary"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-primary">Community Hub</h5>
-                                        <p class="mb-0">Connect with fellow students and participate in campus life.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Closing -->
-                        <div class="text-center mt-4">
-                            <p class="fs-5 fst-italic text-muted">
-                                Whether you're looking for study groups, career fairs, or social events,
-                                you'll find everything you need to make the most of your time at Chas Academy.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="text-center mt-4">
-                        <a href="#" class="btn btn-primary btn-lg me-3">View Calendar</a>
-                        <a href="#" class="btn btn-outline-primary btn-lg">Upcoming Events</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-@* <!-- Quick Links Section -->
-<section class="quick-links py-5">
-    <div class="container">
-        <h2 class="text-center mb-5 display-5 text-primary">Quick Access</h2>
-
-        <div class="row g-4">
-            <!-- Calendar -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm quick-link-card">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-calendar-alt fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Event Calendar</h5>
-                        <p class="card-text">Browse all upcoming events and activities</p>
-                        <a href="#" class="btn btn-outline-primary mt-auto">View Calendar</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- News -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm quick-link-card">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-newspaper fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Campus News</h5>
-                        <p class="card-text">Latest announcements and updates</p>
-                        <a href="#" class="btn btn-outline-primary mt-auto">Read News</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Resources -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm quick-link-card">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-book fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Student Resources</h5>
-                        <p class="card-text">Access learning materials and tools</p>
-                        <a href="#" class="btn btn-outline-primary mt-auto">View Resources</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm quick-link-card">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Get in Touch</h5>
-                        <p class="card-text">Contact administration and staff</p>
-                        <a href="#" class="btn btn-outline-primary mt-auto">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> *@
-
+﻿@model chas_happenings.Models.CalendarMonthViewModel
 
 @{
     ViewData["Title"] = "Home - Chas Happenings";
 }
+
 
 <div id="layout">
     <div id="side1">
@@ -139,10 +12,10 @@
     <div id="middle-container">
         <!-- CALENDAR (top-left, ~80% width) -->
         <section id="calendar">
-            <h2>July 2025</h2>
+            <h2>@Model.MonthTitle</h2>
 
             <div class="calendar-grid">
-                <!-- Weekday header row (Sunday first like your example) -->
+                <!-- Weekday header row: MONDAY to SUNDAY -->
                 <div class="calendar-cell header">Mon</div>
                 <div class="calendar-cell header">Tue</div>
                 <div class="calendar-cell header">Wed</div>
@@ -151,49 +24,51 @@
                 <div class="calendar-cell header">Sat</div>
                 <div class="calendar-cell header">Sun</div>
 
-                <!-- Row 1: July 1 starts on Tuesday -->
-                <div class="calendar-cell"></div>   <!-- Sun -->
-                <div class="calendar-cell"></div>   <!-- Mon -->
-                <div class="calendar-cell">1</div>  <!-- Tue -->
-                <div class="calendar-cell">2</div>  <!-- Wed -->
-                <div class="calendar-cell">3</div>  <!-- Thu -->
-                <div class="calendar-cell">4</div>  <!-- Fri -->
-                <div class="calendar-cell">5</div>  <!-- Sat -->
-                <!-- Row 2 -->
-                <div class="calendar-cell">6</div>
-                <div class="calendar-cell">7</div>
-                <div class="calendar-cell">8</div>
-                <div class="calendar-cell">9</div>
-                <div class="calendar-cell">10</div>
-                <div class="calendar-cell">11</div>
-                <div class="calendar-cell">12</div>
+                @{
+                    // First day of the shown month
+                    var firstDay = new DateTime(Model.Year, Model.Month, 1);
 
-                <!-- Row 3 -->
-                <div class="calendar-cell">13</div>
-                <div class="calendar-cell">14</div>
-                <div class="calendar-cell">15</div>
-                <div class="calendar-cell">16</div>
-                <div class="calendar-cell">17</div>
-                <div class="calendar-cell">18</div>
-                <div class="calendar-cell">19</div>
+                    // .NET DayOfWeek: Sunday=0, Monday=1, ...
+                    // Convert so that Monday = 0, Sunday = 6
+                    int offset = ((int)firstDay.DayOfWeek + 6) % 7;
+                }
 
-                <!-- Row 4 -->
-                <div class="calendar-cell">20</div>
-                <div class="calendar-cell">21</div>
-                <div class="calendar-cell">22</div>
-                <div class="calendar-cell">23</div>
-                <div class="calendar-cell">24</div>
-                <div class="calendar-cell">25</div>
-                <div class="calendar-cell">26</div>
+                @* Empty cells BEFORE the 1st so the month starts on the right weekday *@
+                @for (int i = 0; i < offset; i++)
+                {
+                    <div class="calendar-cell empty"></div>
+                }
 
-                <!-- Row 5 -->
-                <div class="calendar-cell">27</div>
-                <div class="calendar-cell">28</div>
-                <div class="calendar-cell">29</div>
-                <div class="calendar-cell">30</div>
-                <div class="calendar-cell">31</div>
-                <div class="calendar-cell"></div>
-                <div class="calendar-cell"></div>
+                @* One cell per day, with zero or many event "boxes" *@
+                @foreach (var day in Model.Days)
+                {
+                    <div class="calendar-cell day-cell">
+                        <div class="day-number">@day.Date.Day</div>
+
+                        <div class="day-events">
+                            @foreach (var ev in day.Events)
+                            {
+                                // Map the event type text to a clean CSS class
+                                var typeClass = ev.TypeName switch
+                                {
+                                    "School" => "school",
+                                    "StudentBody" => "studentbody",
+                                    "StudentBodey" => "studentbody",   // typo-safe
+                                    "Leasson" => "leasson",
+                                    "StudentEvent" => "studentevent",
+                                    _ => ""               // default: no extra class
+                                };
+
+                                <div class="event-pill @typeClass"
+                                     onclick="onCalendarEventClick(@ev.EventId)">
+                                    <div>@ev.TimeRange</div>
+                                    <div>@ev.Title</div>
+                                    <div>@ev.TypeName</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
         </section>
 
@@ -220,4 +95,3 @@
     <div id="side2">
     </div>
 </div>
-
