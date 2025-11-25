@@ -281,7 +281,12 @@ body {
     background-color: rgba(227, 242, 253, 0.7) !important;
 }
 
+
+
 /* ------ Max egna CSS under ------*/
+
+
+
 
 * {
   margin: 0;
@@ -363,20 +368,22 @@ body {
 
 /* Grid for the actual calendar cells */
 .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 days (Sun–Sat) */
-  grid-auto-rows: 60px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 days (Sun–Sat) */
+    grid-auto-rows: minmax(100px, 3vw);
 }
 
 /* EACH CALENDAR CELL: 2PX BLACK BORDER, NO RADIUS */
 .calendar-cell {
-  border: 2px solid #000;
-  border-radius: 0;
-  font-size: 0.8rem;
-  padding: 4px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+    border: 2px solid #000;
+    border-radius: 0;
+    font-size: 0.8rem;
+    padding: 4px;
+    /* important for layout inside the cell */
+    display: flex;
+    flex-direction: column; /* day number on top, events under */
+    align-items: stretch;
+    justify-content: flex-start;
 }
 
 /* Header row for weekday names */
@@ -385,4 +392,48 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+
+/* style for the event data in calender */
+
+
+.day-number {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.day-events .event-pill {
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin-top: 2px;
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-pill.school {
+    background-color: hotpink;
+}
+
+.event-pill.studentbody {
+    background-color: lightblue;
+}
+
+.event-pill.leasson {
+    background-color: brown;
+}
+
+.event-pill.studentevent {
+    background-color: grey;
+}
+
+
+.day-events {
+    margin-top: 4px;
+    /* take all remaining height in the cell */
+    flex: 1;
+    min-height: 0;
+    /* SAFEGUARD: never overflow the day box */
+    overflow-y: auto; /* scroll inside if too many events */
 }
