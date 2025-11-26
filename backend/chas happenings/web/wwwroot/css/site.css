@@ -326,7 +326,7 @@ body {
 
 
 #middle-container {
-    background-color: #C0C0C0;
+    background-color: white;
     display: grid;
     grid-template-columns: 4fr auto 1fr;
     grid-template-rows: auto auto;
