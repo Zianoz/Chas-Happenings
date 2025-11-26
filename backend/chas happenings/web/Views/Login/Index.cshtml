@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Login - Chas Happenings";
+    Layout = null; // No layout for login page
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>Chas Happenings</h1>
+            <h2>Welcome Back</h2>
+
+            <form id="loginForm" class="login-form">
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">
+                    Log In
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <a href="#" class="forgot-password">Forgot password?</a>
+                <p>
+                    Don't have an account?
+                    <a href="#" class="signup-link">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Clear previous errors
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+
+            // Disable form
+            loginButton.disabled = true;
+            loginButton.textContent = 'Logging in...';
+            emailInput.disabled = true;
+            passwordInput.disabled = true;
+
+            try {
+                // Login request
+                const loginResponse = await fetch('/api/User/LoginUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!loginResponse.ok) {
+                    const errorData = await loginResponse.json();
+                    throw new Error(errorData.message || 'Login failed');
+                }
+
+                // Authenticate to get user role
+                const authResponse = await fetch('/api/User/Authenticate', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!authResponse.ok) {
+                    throw new Error('Authentication failed');
+                }
+
+                const userData = await authResponse.json();
+
+                // Redirect based on role
+                if (userData.role === 'Admin') {
+                    window.location.href = '/Admin';
+                } else {
+                    window.location.href = '/';
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.textContent = error.message || 'An error occurred during login. Please try again.';
+                errorMessage.style.display = 'block';
+
+                // Re-enable form
+                loginButton.disabled = false;
+                loginButton.textContent = 'Log In';
+                emailInput.disabled = false;
+                passwordInput.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
