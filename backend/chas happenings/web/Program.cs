@@ -3,22 +3,14 @@ using Application.Interfaces.IServices;
 using Application.Services;
 using Domain.Models;
 using Infrastructure.Data;
-//using Infrastructure.Repositories.IRepositories;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;  // Add this if needed
-using Swashbuckle.AspNetCore.SwaggerUI; // Add this if needed
-
-
-//using Application.Services.IServices;
+using System.Text;
 
 namespace chas_happenings
 {
@@ -47,32 +39,63 @@ namespace chas_happenings
             builder.Services.AddScoped<IUserRepositories, UserRepositories>();
             builder.Services.AddScoped<IUserService, UserServices>();
 
-            //Register password hasher service
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-
-            //Register JWT service
             builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddScoped<IOpenAIService, OpenAIService>();
+            
             builder.Services.AddHttpClient();
+
             builder.Services.AddScoped<IAdminService, AdminService>();
 
+            // Add JWT Bearer Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"] 
+                                ?? throw new InvalidOperationException("JWT Secret is not configured")))
+                    };
 
-            //Add CORS policy to allow frontend requests
+                    // Read JWT token from cookie
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            // Check for token in cookie first
+                            var token = context.Request.Cookies["authToken"];
+                            if (!string.IsNullOrEmpty(token))
+                            {
+                                context.Token = token;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend", policy =>
                 {
                     policy.WithOrigins(
-                        "http://localhost:5173",  // Vite default port
-                        "http://localhost:3000"   // Alternative React port
+                        "http://localhost:5173",
+                        "http://localhost:3000"
                     )
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials();
+                    .AllowCredentials(); // Required for cookies
                 });
             });
 
-            //Add swagger for API testing
             builder.Services.AddControllers();
+            builder.Services.AddRazorPages(); // Add Razor Pages support
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -96,7 +119,6 @@ namespace chas_happenings
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -105,12 +127,14 @@ namespace chas_happenings
 
             app.UseRouting();
 
-            // Enable CORS - MUST be after UseRouting and before UseAuthorization
             app.UseCors("AllowFrontend");
 
+            // Add Authentication & Authorization middleware
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapRazorPages(); // Map Razor Pages
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

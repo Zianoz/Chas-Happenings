@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,17 +10,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/chas_happenings.styles.css" asp-append-version="true" />
+
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9R5Q1F9GZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Z9R5Q1F9GZ');
+    </script>
+    <!-- SEO metadata tag -->
+    @{
+        var meta = chas_happenings.Models.Seo.SeoConfig.GetMerged(ViewBag);
+    }
+    <title>@meta.Title</title>
+    <meta name="description" content="@meta.Description" />
+    <meta name="keywords" content="@meta.Keywords" />
+
+    <link rel="canonical" href="@meta.CanonicalUrl" />
+
+    <meta property="og:title" content="@meta.OgTitle" />
+    <meta property="og:description" content="@meta.OgDescription" />
+    <meta property="og:image" content="@meta.OgImage" />
+    <meta property="og:type" content="@meta.OgType" />
+
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
-@*                 <!-- logo -->
-                <div class="navbar-brand mx-auto order-0">
-                    <a asp-controller="Home" asp-action="Index">
-                        <img src="~/images/LogoSu.png" alt="chas_happenings" height="60">
-                    </a>
-                </div> *@
                 <!-- Hamburger button-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -37,20 +55,24 @@
                             <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Home" asp-action="Index">News</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light hover-gold" asp-area="" asp-controller="About" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Admin" asp-action="Login">Login</a>
+                            <a class="nav-link text-light hover-gold" href="http://localhost:5173">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Admin" asp-action="index">Admin Dashboard</a>
-                        </li>
+@*                         <li class="nav-item">
+                            <a class="nav-link text-light hover-gold" asp-area="" asp-controller="Admin" asp-action="Index">Admin Dashboard</a>
+                        </li> *@
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-
+    <div class="container">
+        <partial name="_Alerts" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -73,6 +95,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Place the button-tracking script here -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.addEventListener("click", function (e) {
+                if (e.target.matches("button")) {
+                    const text = e.target.innerText.trim();
+                    gtag('event', 'button_click', {
+                        button_text: text
+                    });
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
