@@ -75,14 +75,14 @@ namespace Infrastructure.Data
                 Title = "Chas Intro Day",
                 Description = "Introduction event for Chas Happenings.",
                 Presentation = null,
-                Text1 = null,
+                Text1 = "Welcome to chas Academy introduction day, you guide to a new school life",
                 Text2 = null,
                 EventCreated = new DateTime(2024, 11, 1, 9, 0, 0, DateTimeKind.Utc),
-                EventDate = new DateTime(2024, 11, 15),
+                EventDate = new DateTime(2025, 11, 17),
                 StartTime = new TimeSpan(10, 0, 0),
                 EndTime = new TimeSpan(12, 0, 0),
                 Location = "Chas Academy, Stockholm",
-                Type = EventType.StudentBodey   
+                Type = EventType.School   
             });
             eventModel.HasData(new Event
             {
@@ -93,7 +93,7 @@ namespace Infrastructure.Data
                 Text1 = null,
                 Text2 = null,
                 EventCreated = new DateTime(2024, 11, 1, 9, 0, 0, DateTimeKind.Utc),
-                EventDate = new DateTime(2025, 7, 15),
+                EventDate = new DateTime(2025, 11, 15),
                 StartTime = new TimeSpan(10, 0, 0),
                 EndTime = new TimeSpan(12, 0, 0),
                 Location = "Chas Academy, Stockholm",
