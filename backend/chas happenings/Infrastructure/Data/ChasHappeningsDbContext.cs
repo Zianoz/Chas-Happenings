@@ -297,6 +297,21 @@ namespace Infrastructure.Data
         EndTime = new TimeSpan(19, 0, 0),
         Location = "Chas Academy, Lounge",
         Type = EventType.StudentEvent
+    },
+    new Event
+    {
+        Id = 23,
+        Title = "Presentation",
+        Description = "Chas Academy group presentation",
+        Presentation = null,
+        Text1 = "Se you there ^^",
+        Text2 = null,
+        EventCreated = new DateTime(2024, 11, 12, 16, 0, 0, DateTimeKind.Utc),
+        EventDate = new DateTime(2025, 11, 26),
+        StartTime = new TimeSpan(9, 0, 0),
+        EndTime = new TimeSpan(16, 0, 0),
+        Location = "Rum 8, våning 9",
+        Type = EventType.Leasson
     }
 );
 
