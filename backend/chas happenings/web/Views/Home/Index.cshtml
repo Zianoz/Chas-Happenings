@@ -8,7 +8,6 @@
     <div id="side1"></div>
 
     <div id="middle-container">
-        <!-- CALENDAR (top-left, ~80% width) -->
         <section id="calendar">
             <h2>Loading...</h2>
             <div class="calendar-grid">
@@ -16,9 +15,14 @@
             </div>
         </section>
 
-        <!-- DYNAMIC INFO (top-right, ~20% width) -->
+        <section id="event-filters">
+            <div class="filter-box filter-school" onclick="onFilterBoxClick(this)"></div>
+            <div class="filter-box filter-studentbody" onclick="onFilterBoxClick(this)"></div>
+            <div class="filter-box filter-leasson" onclick="onFilterBoxClick(this)"></div>
+            <div class="filter-box filter-studentevent" onclick="onFilterBoxClick(this)"></div>
+        </section>
+
         <section id="dynamic-info">
-            <!-- empty for now -->
         </section>
 
         <!-- AI CHAT SECTION (bottom row, full width) -->
