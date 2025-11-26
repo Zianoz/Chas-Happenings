@@ -2,6 +2,7 @@
 using Application.Interfaces.Irepositories;
 using Application.Interfaces.IServices;
 using Application.Mappers.DTOMappers;
+using Domain.Enums;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -83,6 +84,8 @@ namespace Application.Services
             var updatedUser = DTOUserMapper.UpdateUserByDTOMapper(user, updateUserDTO);
             return await _userRepo.UpdateUserRepoAsync(updatedUser);
         }
+
+
         //extra user operations
         public async Task<GetUserAllDataDTO?> GetUserAllDataAsync(int userId)
         {
@@ -115,8 +118,20 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<User>> SearchUserAsync(string query)
+        {
+            return await _userRepo.SearchUserRepoAsync(query);
+        }
 
-
-
+        public async Task<GetUserByIdDTO?> GetUserByUsernameAsync(string username)
+        {
+            var user = await _userRepo.GetUserByUsernameRepoAsync(username);
+            if (user == null)
+            {
+                throw new Exception($"User with id {username} not found.");
+            }
+            var userDTO = DTOUserMapper.GetUserByIdMapper(user);
+            return userDTO;
+        }
     }
 }
