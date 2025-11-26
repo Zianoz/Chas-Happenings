@@ -39,5 +39,36 @@
         <input asp-for="Email" type="email" class="form-control" />
     </div>
 
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label"></label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Course" class="form-label"></label>
+        <input asp-for="Course" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Role" class="form-label"></label>
+        <select asp-for="Role" class="form-control">
+            <option value="">Select Role</option>
+            <option>Student</option>
+            <option>Teacher</option>
+            <option>Admin</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ProfilePictureUrl" class="form-label"></label>
+        <input asp-for="ProfilePictureUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="UserDescription" class="form-label"></label>
+        <textarea asp-for="UserDescription" class="form-control" rows="4"></textarea>
+    </div>
+
     <button type="submit" class="btn btn-primary">Create User</button>
+    <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
